@@ -26,15 +26,15 @@
         <form method="post" 
               action="index.php?uc=gererFrais&action=validerMajFraisForfait" 
               role="form">
-            <fieldset>       
+            <fieldset class="d-grid row-gap-3 ms-4">
                 <?php
                 foreach ($lesFraisForfait as $unFrais) {
                     $idFrais = $unFrais['idfrais'];
                     $libelle = htmlspecialchars($unFrais['libelle']);
                     $quantite = $unFrais['quantite']; ?>
                     <div class="form-group">
-                        <label for="idFrais"><?php echo $libelle ?></label>
-                        <input type="text" id="idFrais" 
+                        <label for="<?php echo $idFrais ?>" class="fw-semibold"><?php echo $libelle ?></label>
+                        <input type="text" id="<?php echo $idFrais ?>" 
                                name="lesFrais[<?php echo $idFrais ?>]"
                                size="10" maxlength="5" 
                                value="<?php echo $quantite ?>" 
@@ -43,8 +43,10 @@
                     <?php
                 }
                 ?>
-                <button class="btn btn-success" type="submit">Ajouter</button>
-                <button class="btn btn-danger" type="reset">Effacer</button>
+                <div class="d-flex gap-3">
+                    <button class="btn btn-success" type="submit">Ajouter</button>
+                    <button class="btn btn-danger" type="reset">Effacer</button>
+                </div>
             </fieldset>
         </form>
     </div>

@@ -19,9 +19,9 @@
 ?>
 <hr>
 <div class="row">
-    <div class="panel panel-info">
-        <div class="panel-heading">Descriptif des éléments hors forfait</div>
-        <table class="table table-bordered table-responsive">
+    <div class="card text-bg-info bg-opacity-25 p-0 border-info/50 mb-3">
+        <div class="card-header">Descriptif des éléments hors forfait</div>
+        <table class="table table-bordered table-responsive m-0">
             <thead>
                 <tr>
                     <th class="date">Date</th>

@@ -40,35 +40,37 @@
                 <div class="row vertical-align">
                     <div class="col-md-4">
                         <h1>
-                            <img src="./images/logo.jpg" class="img-responsive" 
+                            <img src="./images/logo.jpg" class="img-fluid" 
                                  alt="Laboratoire Galaxy-Swiss Bourdin" 
                                  title="Laboratoire Galaxy-Swiss Bourdin">
                         </h1>
                     </div>
                     <div class="col-md-8">
                         <ul class="nav nav-pills float-end" role="tablist">
-                            <li <?php if (!$uc || $uc == 'accueil') { ?>class="active" <?php } ?>>
-                                <a href="index.php" class="nav-link">
-                                    <span class=""></span>
+                            <li >
+                                <a href="index.php" class="nav-link <?php if (!$uc || $uc == 'accueil') { ?>active <?php } ?>" >
+                                    <span class="bi bi-house-door-fill"></span>
                                     Accueil
                                 </a>
                             </li>
-                            <li <?php if ($uc == 'gererFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=gererFrais&action=saisirFrais" class="nav-link">
-                                    <span class=""></span>
+                            <li >
+                                <a href="index.php?uc=gererFrais&action=saisirFrais"
+                                   class="nav-link <?php if ($uc == 'gererFrais') { ?>active<?php } ?>">
+                                    <span class="bi bi-pencil-fill"></span>
                                     Renseigner la fiche de frais
                                 </a>
                             </li>
-                            <li <?php if ($uc == 'etatFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=etatFrais&action=selectionnerMois" class="nav-link">
-                                    <span class=""></span>
+                            <li >
+                                <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                                   class="nav-link <?php if ($uc == 'etatFrais') { ?>active<?php } ?>">
+                                    <span class="bi bi-list-task"></span>
                                     Afficher mes fiches de frais
                                 </a>
                             </li>
-                            <li 
-                            <?php if ($uc == 'deconnexion') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=deconnexion&action=demandeDeconnexion" class="nav-link">
-                                    <span class=""></span>
+                            <li>
+                                <a href="index.php?uc=deconnexion&action=demandeDeconnexion"
+                                   class="nav-link <?php if ($uc == 'deconnexion') { ?>active<?php } ?>">
+                                    <span class="bi bi-box-arrow-right"></span>
                                     Déconnexion
                                 </a>
                             </li>
@@ -79,9 +81,9 @@
             <?php
             } else {
                 ?>   
-                <h1>
+                <h1 class="text-center">
                     <img src="./images/logo.jpg"
-                         class="img-responsive center-block"
+                         class="img-fluid"
                          alt="Laboratoire Galaxy-Swiss Bourdin"
                          title="Laboratoire Galaxy-Swiss Bourdin">
                 </h1>
