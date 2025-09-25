@@ -34,7 +34,7 @@
         <div class="container">
             <?php
             $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if ($estConnecte) {
+            if ($estConnecte && $_SESSION['role'] == "visiteur") {
                 ?>
             <div class="header">
                 <div class="row vertical-align">
