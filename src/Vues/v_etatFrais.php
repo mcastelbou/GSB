@@ -18,18 +18,18 @@
 
 ?>
 <hr>
-<div class="panel panel-primary">
-    <div class="panel-heading">Fiche de frais du mois 
+<div class="card border-primary border-opacity-75">
+    <div class="card-header text-bg-primary bg-opacity-75">Fiche de frais du mois 
         <?php echo $numMois . '-' . $numAnnee ?> : </div>
-    <div class="panel-body">
+    <div class="card-body">
         <strong><u>Etat :</u></strong> <?php echo $libEtat ?>
         depuis le <?php echo $dateModif ?> <br> 
         <strong><u>Montant validé :</u></strong> <?php echo $montantValide ?>
     </div>
 </div>
-<div class="panel panel-info">
-    <div class="panel-heading">Eléments forfaitisés</div>
-    <table class="table table-bordered table-responsive">
+<div class="card border-info border-opacity-50 my-3">
+    <div class="card-header text-bg-info bg-opacity-25">Eléments forfaitisés</div>
+    <table class="table table-bordered table-responsive m-0">
         <tr>
             <?php
             foreach ($lesFraisForfait as $unFraisForfait) {
@@ -50,10 +50,10 @@
         </tr>
     </table>
 </div>
-<div class="panel panel-info">
-    <div class="panel-heading">Descriptif des éléments hors forfait - 
+<div class="card border-info border-opacity-50">
+    <div class="card-header text-bg-info bg-opacity-25">Descriptif des éléments hors forfait - 
         <?php echo $nbJustificatifs ?> justificatifs reçus</div>
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive m-0">
         <tr>
             <th class="date">Date</th>
             <th class="libelle">Libellé</th>

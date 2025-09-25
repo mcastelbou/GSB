@@ -19,7 +19,7 @@
 ?>
 <hr>
 <div class="row">
-    <div class="card text-bg-info bg-opacity-25 p-0 border-info/50 mb-3">
+    <div class="card text-bg-info bg-opacity-25 p-0 border-info border-opacity-25 mb-5">
         <div class="card-header">Descriptif des éléments hors forfait</div>
         <table class="table table-bordered table-responsive m-0">
             <thead>
@@ -59,25 +59,27 @@
     <h3>Nouvel élément hors forfait</h3>
     <div class="col-md-4">
         <form action="index.php?uc=gererFrais&action=validerCreationFrais" 
-              method="post" role="form">
+              method="post" role="form" class="ms-4">
             <div class="form-group">
-                <label for="txtDateHF">Date (jj/mm/aaaa): </label>
+                <label for="txtDateHF" class="fw-semibold my-2">Date (jj/mm/aaaa): </label>
                 <input type="date" id="txtDateHF" name="dateFrais" 
                        class="form-control" id="text">
             </div>
             <div class="form-group">
-                <label for="txtLibelleHF">Libellé</label>             
+                <label for="txtLibelleHF" class="fw-semibold my-2">Libellé</label>             
                 <input type="text" id="txtLibelleHF" name="libelle" class="form-control" id="text">
             </div> 
             <div class="form-group">
-                <label for="txtMontantHF">Montant : </label>
+                <label for="txtMontantHF" class="fw-semibold my-2">Montant : </label>
                 <div class="input-group">
-                    <span class="input-group-addon">€</span>
+                    <span class="input-group-text">€</span>
                     <input type="text" id="txtMontantHF" name="montant" class="form-control" value="">
                 </div>
             </div>
-            <button class="btn btn-success" type="submit">Ajouter</button>
-            <button class="btn btn-danger" type="reset">Effacer</button>
+            <div class="d-flex gap-3 mt-3">
+                <button class="btn btn-success" type="submit">Ajouter</button>
+                <button class="btn btn-danger" type="reset">Effacer</button>
+            </div>
         </form>
     </div>
 </div>

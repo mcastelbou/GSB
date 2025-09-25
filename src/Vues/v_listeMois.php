@@ -17,16 +17,16 @@
  */
 
 ?>
-<h2>Mes fiches de frais</h2>
-<div class="row">
+<h2 class="mt-2">Mes fiches de frais</h2>
+<div class="row mt-4">
     <div class="col-md-4">
         <h3>Sélectionner un mois : </h3>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 sm:col-md-1">
         <form action="index.php?uc=etatFrais&action=voirEtatFrais" 
               method="post" role="form">
             <div class="form-group">
-                <label for="lstMois" accesskey="n">Mois : </label>
+                <label for="lstMois" accesskey="n" class="fw-semibold mb-2">Mois : </label>
                 <select id="lstMois" name="lstMois" class="form-control">
                     <?php
                     foreach ($lesMois as $unMois) {
@@ -49,10 +49,12 @@
 
                 </select>
             </div>
-            <input id="ok" type="submit" value="Valider" class="btn btn-success" 
-                   role="button">
-            <input id="annuler" type="reset" value="Effacer" class="btn btn-danger" 
-                   role="button">
+            <div class="d-flex gap-2 mt-3">
+                <input id="ok" type="submit" value="Valider" class="btn btn-success" 
+                       role="button">
+                <input id="annuler" type="reset" value="Effacer" class="btn btn-danger" 
+                       role="button">
+            </div>
         </form>
     </div>
 </div>
