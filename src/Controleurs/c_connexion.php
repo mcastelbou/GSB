@@ -38,7 +38,8 @@ switch ($action) {
             $id = $user['id'];
             $nom = $user['nom'];
             $prenom = $user['prenom'];
-            Utilitaires::connecter($id, $nom, $prenom);
+            $role = $role;
+            Utilitaires::connecter($id, $nom, $prenom, $role);
             header('Location: index.php');
         }
         break;
