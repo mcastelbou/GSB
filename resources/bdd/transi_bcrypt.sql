@@ -1,0 +1,1 @@
+ALTER TABLE visiteur MODIFY mdp CHAR(60);
