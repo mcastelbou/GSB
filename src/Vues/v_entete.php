@@ -79,6 +79,51 @@
                 </div>
             </div>
             <?php
+            }else if ($estConnecte && $_SESSION['role'] == "comptable") {
+            ?> 
+            <div class="header">
+                <div class="row vertical-align">
+                    <div class="col-md-4">
+                        <h1>
+                            <img src="./images/logo.jpg" class="img-fluid" 
+                                 alt="Laboratoire Galaxy-Swiss Bourdin" 
+                                 title="Laboratoire Galaxy-Swiss Bourdin">
+                        </h1>
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav nav-pills float-end" role="tablist">
+                            <li >
+                                <a href="index.php" class="nav-link text-warning<?php if (!$uc || $uc == 'accueilComptable') { ?>active bg-warning text-white<?php } ?>" >
+                                    <span class="bi bi-house-door-fill"></span>
+                                    Accueil
+                                </a>
+                            </li>
+                            <li >
+                                <a href="index.php?uc=gererFrais&action=saisirFrais"
+                                   class="nav-link text-warning<?php if ($uc == 'validerFrais') { ?>active bg-warning text-white<?php } ?>">
+                                    <span class="bi bi-check"></span>
+                                    Valider les fiches de frais
+                                </a>
+                            </li>
+                            <li >
+                                <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                                   class="nav-link text-warning<?php if ($uc == 'suivrePaiementFrais') { ?>active bg-warning text-white<?php } ?>">
+                                    <span>€</span>
+                                    Suivre le paiement des fiches de frais
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.php?uc=deconnexion&action=demandeDeconnexion"
+                                   class="nav-link text-warning<?php if ($uc == 'deconnexion') { ?>active bg-warning text-white<?php } ?>">
+                                    <span class="bi bi-box-arrow-right"></span>
+                                    Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
             } else {
                 ?>   
                 <h1 class="text-center">
