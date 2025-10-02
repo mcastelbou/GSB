@@ -452,6 +452,36 @@ class PdoGsb {
         }
         return $lesMois;
     }
+    
+    public function getLesVisiteursAValider($idVisiteur): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT fichefrais.mois AS mois FROM fichefrais '
+                . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
+                . 'ORDER BY fichefrais.mois desc'
+        );
+        $requetePrepare2 = $this->connexion->prepare(
+                'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
+                . 'FROM visiteur '
+                . 'JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur'
+                . 'WHERE "CL" = ANY ('
+                . 'SELECT idetat FROM fichefrais)'
+                . 'ORDER BY visiteur.id asc'
+        );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        $lesMois = array();
+        /*while ($laLigne = $requetePrepare->fetch()) {
+            $mois = $laLigne['mois'];
+            $numAnnee = substr($mois, 0, 4);
+            $numMois = substr($mois, 4, 2);
+            $lesMois[] = array(
+                'mois' => $mois,
+                'numAnnee' => $numAnnee,
+                'numMois' => $numMois
+            );
+        }*/
+        return $lesMois;
+    }
 
     /**
      * Retourne les informations d'une fiche de frais d'un visiteur pour un

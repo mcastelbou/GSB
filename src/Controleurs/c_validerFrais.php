@@ -8,7 +8,7 @@
  * @category  PPE
  * @package   GSB
  * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
+ * @author    Martin CASTELBOU <jgil@ac-nice.fr>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -20,17 +20,17 @@ use Outils\Utilitaires;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $idVisiteur = $_SESSION['idUser'];
 switch ($action) {
-    case 'selectionnerMois':
-        $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+    case 'selectionnerVisiteur':
+        /*$lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
         // Afin de sélectionner par défaut le dernier mois dans la zone de liste
         // on demande toutes les clés, et on prend la première,
         // les mois étant triés décroissants
         $lesCles = array_keys($lesMois);
         $moisASelectionner = $lesCles[0];
         include PATH_VIEWS . 'v_listeMois.php';
-        break;
-    case 'voirEtatFrais':
-        $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        break;*/
+    case 'voirFicheAValider':
+        /*$leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
         $moisASelectionner = $leMois;
         include PATH_VIEWS . 'v_listeMois.php';
@@ -43,5 +43,5 @@ switch ($action) {
         $montantValide = $lesInfosFicheFrais['montantValide'];
         $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
         $dateModif = Utilitaires::dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
-        include PATH_VIEWS . 'v_etatFrais.php';
+        include PATH_VIEWS . 'v_etatFrais.php';*/        
 }

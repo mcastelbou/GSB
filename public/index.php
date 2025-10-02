@@ -43,6 +43,12 @@ switch ($uc) {
     case 'accueil':
         include PATH_CTRLS . 'c_accueil.php';
         break;
+    case 'validerFrais':
+        include PATH_CTRLS . 'c_validerFrais.php';
+        break;
+    case 'suivrePaiementFrais':
+        include PATH_CTRLS . 'c_suivrePaiementFrais.php';
+        break;
     case 'gererFrais':
         include PATH_CTRLS . 'c_gererFrais.php';
         break;

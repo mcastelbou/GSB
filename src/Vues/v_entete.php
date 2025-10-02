@@ -99,14 +99,14 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="index.php?uc=gererFrais&action=saisirFrais"
+                                <a href="index.php?uc=validerFrais&action=saisirFrais"
                                    class="nav-link text-warning<?php if ($uc == 'validerFrais') { ?>active bg-warning text-white<?php } ?>">
                                     <span class="bi bi-check"></span>
                                     Valider les fiches de frais
                                 </a>
                             </li>
                             <li >
-                                <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                                <a href="index.php?uc=suivrePaiementFrais&action=selectionnerMois"
                                    class="nav-link text-warning<?php if ($uc == 'suivrePaiementFrais') { ?>active bg-warning text-white<?php } ?>">
                                     <span>€</span>
                                     Suivre le paiement des fiches de frais

@@ -33,9 +33,10 @@ abstract class Utilitaires
      * Enregistre dans une variable session les infos d'un visiteur
      *
      * @param String $idUser     ID de l'utilisateur
-     * @param String $nom        Nom du visiteur
-     * @param String $prenom     Prénom du visiteur
-     *
+     * @param String $nom        Nom de l'utilisateur
+     * @param String $prenom     Prénom de l'utilisateur
+     * @param String $role       Rôle de l'utilisateur
+     * 
      * @return null
      */
     public static function connecter($idUser, $nom, $prenom, $role): void
