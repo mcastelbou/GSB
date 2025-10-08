@@ -90,19 +90,29 @@ class PdoGsb
      *
      * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
      */
-    public function getInfosVisiteur($login, $mdp): array
+    public function getInfosVisiteur($login): array
     {
         $requetePrepare = $this->connexion->prepare(
             'SELECT visiteur.id AS id, visiteur.nom AS nom, '
             . 'visiteur.prenom AS prenom '
             . 'FROM visiteur '
-            . 'WHERE visiteur.login = :unLogin AND visiteur.mdp = :unMdp'
+            . 'WHERE visiteur.login = :unLogin'
         );
         $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
-        $requetePrepare->bindParam(':unMdp', $mdp, PDO::PARAM_STR);
         $requetePrepare->execute();
         return $requetePrepare->fetch();
     }
+    
+    public function getMdpVisiteur($login) {
+    $requetePrepare = $this->connexion->prepare(
+        'SELECT mdp '
+        . 'FROM visiteur '
+        . 'WHERE visiteur.login = :unLogin'
+    );
+    $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
+    $requetePrepare->execute();
+    return $requetePrepare->fetch(PDO::FETCH_OBJ)->mdp;
+}
 
     /**
      * Retourne sous forme d'un tableau associatif toutes les lignes de frais
@@ -196,6 +206,16 @@ class PdoGsb
         $requetePrepare = $this->connexion->prepare(
             'SELECT fraisforfait.id as idfrais '
             . 'FROM fraisforfait ORDER BY fraisforfait.id'
+        );
+        $requetePrepare->execute();
+        return $requetePrepare->fetchAll();
+    }
+    
+    public function getLesIdVisiteur(): array
+    {
+        $requetePrepare = $this->connexion->prepare(
+            'SELECT visiteur.id as idvisiteur '
+            . 'FROM visiteur ORDER BY visiteur.id'
         );
         $requetePrepare->execute();
         return $requetePrepare->fetchAll();
