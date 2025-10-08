@@ -38,7 +38,7 @@ switch ($action) {
             $nom = $visiteur['nom'];
             $prenom = $visiteur['prenom'];
             Utilitaires::connecter($id, $nom, $prenom);
-            header('Location: index.php');
+            //header('Location: index.php');
             $email = $visiteur['email'];
             $code = rand(1000, 9999);
             $pdo->setCodeA2f($id, $code);
