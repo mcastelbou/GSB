@@ -484,7 +484,17 @@ class PdoGsb {
                 . 'WHERE idetat = "CL"'
         );
         $requetePrepare->execute();
-        $lesVisiteurs = $requetePrepare->fetch();
+        $lesVisiteurs = array();
+        while ($laLigne = $requetePrepare->fetch()){
+            $id = $laLigne['id'];
+            $nom = $laLigne['nom'];
+            $prenom = $laLigne['prenom'];
+            $lesVisiteurs[] = array(
+                'id' => $id,
+                'nom' => $nom,
+                'prenom' => $prenom
+            );
+        }
         return $lesVisiteurs;
     }
 
