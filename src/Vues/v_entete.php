@@ -99,7 +99,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="index.php?uc=validerFrais&action=saisirFrais"
+                                <a href="index.php?uc=validerFrais&action=selectionnerVisiteur"
                                    class="nav-link text-warning<?php if ($uc == 'validerFrais') { ?>active bg-warning text-white<?php } ?>">
                                     <span class="bi bi-check"></span>
                                     Valider les fiches de frais

@@ -8,7 +8,7 @@
  * @category  PPE
  * @package   GSB
  * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    Martin CASTELBOU <jgil@ac-nice.fr>
+ * @author    Martin CASTELBOU <#>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -18,17 +18,20 @@
 use Outils\Utilitaires;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$idVisiteur = $_SESSION['idUser'];
+$visiteurAModifier = '';
 switch ($action) {
     case 'selectionnerVisiteur':
-        /*$lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-        // Afin de sélectionner par défaut le dernier mois dans la zone de liste
-        // on demande toutes les clés, et on prend la première,
-        // les mois étant triés décroissants
-        $lesCles = array_keys($lesMois);
-        $moisASelectionner = $lesCles[0];
-        include PATH_VIEWS . 'v_listeMois.php';
-        break;*/
+        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
+        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
+        break;
+    case 'selectionnerMois':
+        $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
+        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
+        $lesMoisAValider = $pdo->getLesMoisAValider($visiteurAModifier);
+        $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon'];
+        include PATH_VIEWS . 'v_selectionnerMois.php';
+        break;
     case 'voirFicheAValider':
         /*$leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);

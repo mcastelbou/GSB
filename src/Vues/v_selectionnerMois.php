@@ -17,32 +17,33 @@
  */
 
 ?>
-<div class="row d-flex mt-4 gap-5">
+
+
     <div class="col-md-4 sm:col-md-1">
-        <form action="index.php?uc=validerFrais&action=selectionnerMois" 
+        <form action="index.php?uc=validerFrais&action=selectionnerVisiteur" 
               method="post" role="form">
             <div class="form-group">
-                <label for="visiteur" accesskey="n" class="fw-semibold mb-2">Choisir le visiteur : </label>
-                <select id="visiteur" name="visiteur" class="form-control ms-3">
-                    <option hidden value="placeholder">Sélectionner un visiteur</option>
+                <label for="visiteur" accesskey="n" class="fw-semibold mb-2">Mois :</label>
+                <select id="mois" name="mois" class="form-control ms-3">
                     <?php
-                    foreach ($lesVisiteursAValider as $unVisiteur) {
-                        $id = $unVisiteur['id'];
-                        $nom = $unVisiteur['nom'];
-                        $prenom = $unVisiteur['prenom'];
-                        if ($id == $visiteurAModifier) {
+                    foreach ($lesMois as $unMois) {
+                        $mois = $unMois['mois'];
+                        $numAnnee = $unMois['numAnnee'];
+                        $numMois = $unMois['numMois'];
+                        if ($mois == $moisASelectionner) {
                             ?>
-                            <option selected value="<?php echo $id ?>">
-                                <?php echo $nom . ' ' . $prenom ?> </option> 
+                            <option selected value="<?php echo $mois ?>">
+                                <?php echo $numMois . '/' . $numAnnee ?> </option>
                             <?php
                         } else {
                             ?>
-                            <option value="<?php echo $id ?>">
-                                <?php echo $nom . ' ' . $prenom ?> </option>
+                            <option value="<?php echo $mois ?>">
+                                <?php echo $numMois . '/' . $numAnnee ?> </option>
                             <?php
                         }
                     }
                     ?>    
+
                 </select>
             </div>
             <div class="d-flex gap-2 mt-3 ms-3">
@@ -53,3 +54,7 @@
             </div>
         </form>
     </div>
+</div>
+
+
+

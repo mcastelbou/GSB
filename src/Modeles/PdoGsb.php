@@ -453,24 +453,17 @@ class PdoGsb {
         return $lesMois;
     }
     
-    public function getLesVisiteursAValider($idVisiteur): array {
+    public function getLesMoisAValider($idVisiteur): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT fichefrais.mois AS mois FROM fichefrais '
                 . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
+                . 'AND fichefrais.idetat = "CL" '
                 . 'ORDER BY fichefrais.mois desc'
-        );
-        $requetePrepare2 = $this->connexion->prepare(
-                'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
-                . 'FROM visiteur '
-                . 'JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur'
-                . 'WHERE "CL" = ANY ('
-                . 'SELECT idetat FROM fichefrais)'
-                . 'ORDER BY visiteur.id asc'
         );
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->execute();
         $lesMois = array();
-        /*while ($laLigne = $requetePrepare->fetch()) {
+        while ($laLigne = $requetePrepare->fetch()) {
             $mois = $laLigne['mois'];
             $numAnnee = substr($mois, 0, 4);
             $numMois = substr($mois, 4, 2);
@@ -479,8 +472,20 @@ class PdoGsb {
                 'numAnnee' => $numAnnee,
                 'numMois' => $numMois
             );
-        }*/
+        }
         return $lesMois;
+    }
+    
+    public function getLesVisiteursAValider(): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
+                . 'FROM visiteur '
+                . 'JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
+                . 'WHERE idetat = "CL"'
+        );
+        $requetePrepare->execute();
+        $lesVisiteurs = $requetePrepare->fetch();
+        return $lesVisiteurs;
     }
 
     /**
