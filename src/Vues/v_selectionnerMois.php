@@ -43,6 +43,9 @@
                     ?>    
 
                 </select>
+                <select hidden id="visiteur" name="visiteur" 
+                        class="form-control" value="<?php echo $visiteurAModifier?>">
+                </select>
             </div>
             <div class="d-flex gap-2 mt-3 ms-3">
                 <input id="ok" type="submit" value="Valider" class="btn btn-success" 

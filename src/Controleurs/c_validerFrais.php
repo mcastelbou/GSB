@@ -37,6 +37,7 @@ switch ($action) {
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
         include PATH_VIEWS . 'v_selectionnerMois.php';
+        
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
