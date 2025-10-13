@@ -27,7 +27,7 @@ switch ($action) {
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
         include PATH_VIEWS . 'v_selectionnerVisiteur.php';
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
-        $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon'];
+        $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon']-1;
         include PATH_VIEWS . 'v_selectionnerMois.php';
         break;
     case 'voirFicheAValider':

@@ -43,8 +43,8 @@
                     ?>    
 
                 </select>
-                <select hidden id="visiteur" name="visiteur" 
-                        class="form-control" value="<?php echo $visiteurAModifier?>">
+                <select hidden id="visiteur" name="visiteur" class="form-control">
+                    <option selected value="<?php echo $visiteurAModifier?>"></option>
                 </select>
             </div>
             <div class="d-flex gap-2 mt-3 ms-3">
