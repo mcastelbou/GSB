@@ -14,11 +14,9 @@
  * @version   GIT: <0>
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
-
 use Outils\Utilitaires;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$visiteurAModifier = null;
 switch ($action) {
     case 'selectionnerVisiteur':
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
@@ -28,23 +26,21 @@ switch ($action) {
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
         include PATH_VIEWS . 'v_selectionnerVisiteur.php';
-        $lesMoisAValider = $pdo->getLesMoisAValider($visiteurAModifier);
+        $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
         $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon'];
         include PATH_VIEWS . 'v_selectionnerMois.php';
         break;
     case 'voirFicheAValider':
-        /*$leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
-        $moisASelectionner = $leMois;
-        include PATH_VIEWS . 'v_listeMois.php';
-        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
-        $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-        $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
-        $numAnnee = substr($leMois, 0, 4);
-        $numMois = substr($leMois, 4, 2);
-        $libEtat = $lesInfosFicheFrais['libEtat'];
-        $montantValide = $lesInfosFicheFrais['montantValide'];
-        $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
-        $dateModif = Utilitaires::dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
-        include PATH_VIEWS . 'v_etatFrais.php';*/        
+        $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
+        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
+        $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
+        include PATH_VIEWS . 'v_selectionnerMois.php';
+        $numAnnee = substr($moisASelectionner, 0, 4);
+        $numMois = substr($moisASelectionner, 4, 2);
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
+        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        require PATH_VIEWS . 'v_listeFraisForfait.php';
+        require PATH_VIEWS . 'v_listeFraisHorsForfait.php';
 }

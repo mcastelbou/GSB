@@ -17,10 +17,8 @@
  */
 
 ?>
-
-
     <div class="col-md-4 sm:col-md-1">
-        <form action="index.php?uc=validerFrais&action=selectionnerVisiteur" 
+        <form action="index.php?uc=validerFrais&action=voirFicheAValider" 
               method="post" role="form">
             <div class="form-group">
                 <label for="visiteur" accesskey="n" class="fw-semibold mb-2">Mois :</label>

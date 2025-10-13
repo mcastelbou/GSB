@@ -511,7 +511,7 @@ class PdoGsb {
     public function getLesInfosFicheFrais($idVisiteur, $mois): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT fichefrais.idetat as idEtat, '
-                . 'fichefrais.datemodif as dateModif,'
+                . 'fichefrais.datemodif as dateModif, '
                 . 'fichefrais.nbjustificatifs as nbJustificatifs, '
                 . 'fichefrais.montantvalide as montantValide, '
                 . 'etat.libelle as libEtat '
