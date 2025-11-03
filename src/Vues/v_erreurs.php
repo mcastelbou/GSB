@@ -17,10 +17,10 @@
  */
 
 ?>
-<div class="alert alert-danger" role="alert">
+<div class="d-flex flex-column align-items-start alert alert-danger fw-bold" role="alert">
     <?php
     foreach ($_REQUEST['erreurs'] as $erreur) {
-        echo '<p>' . htmlspecialchars($erreur) . '</p>';
+        echo '<div>' . htmlspecialchars($erreur) . '</div>';        
     }
     ?>
 </div>

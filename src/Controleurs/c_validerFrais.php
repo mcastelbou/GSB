@@ -24,6 +24,11 @@ switch ($action) {
         break;
     case 'selectionnerMois':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($visiteurAModifier == "placeholder"){
+            Utilitaires::ajouterErreur("Aucun visiteur séléctionné.");
+            include PATH_VIEWS . 'v_erreurs.php';
+            break;
+        }
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
         include PATH_VIEWS . 'v_selectionnerVisiteur.php';
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
@@ -42,6 +47,5 @@ switch ($action) {
         $numMois = substr($moisASelectionner, 4, 2);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
-        require PATH_VIEWS . 'v_listeFraisForfait.php';
-        require PATH_VIEWS . 'v_listeFraisHorsForfait.php';
+        include PATH_VIEWS . 'v_listeFraisAValider.php';
 }

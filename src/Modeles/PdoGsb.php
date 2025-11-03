@@ -139,16 +139,20 @@ class PdoGsb {
      */
     public function getInfosUtilisateur($login, $mdp): array {
         $role = $this->getRoleUtilisateur($login);
-        if ($role == "visiteur") {
-            $infos = $this->getInfosVisiteur($login, $mdp);
-            $infos['role'] = $role;
-        } else if ($role == "comptable") {
-            $infos = $this->getInfosComptable($login, $mdp);
-            $infos['role'] = $role;
-        } else {
-            echo '<strong>Connexion impossible</strong>';
+        if ($role == ""){
+            return [];
+        } else {    
+            if ($role == "visiteur") {
+                $infos = $this->getInfosVisiteur($login, $mdp);
+                $infos['role'] = $role;
+            } else if ($role == "comptable") {
+                $infos = $this->getInfosComptable($login, $mdp);
+                $infos['role'] = $role;
+            } else {
+                echo '<strong>Connexion impossible</strong>';
+            }
+            return $infos;
         }
-        return $infos;
     }
 
     public function getRoleUtilisateur($login) : String {
@@ -158,7 +162,11 @@ class PdoGsb {
         $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
         $requetePrepare->execute();
         $role = $requetePrepare->fetch();
-        return $role['roleuser'];
+        if (!is_array($role)){
+            return "";
+        } else {
+            return $role['roleuser'];
+        }    
     }
 
     /**
