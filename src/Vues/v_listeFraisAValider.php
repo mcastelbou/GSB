@@ -24,9 +24,7 @@
     </h2>
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
-        <form method="post" 
-              action="index.php?uc=gererFrais&action=validerMajFraisForfait" 
-              role="form">
+        <form method="post" role="form">
             <fieldset class="d-grid row-gap-3 ms-4">
                 <?php
                 foreach ($lesFraisForfait as $unFrais) {
@@ -44,8 +42,8 @@
                     <?php
                 }
                 ?>
-                <div class="d-flex gap-3">
-                    <button class="btn btn-success" type="submit">Ajouter</button>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" type="submit" onClick="confirm('Modification prise en compte');">Corriger</button>
                     <button class="btn btn-danger" type="reset">Effacer</button>
                 </div>
             </fieldset>
@@ -67,6 +65,17 @@
             </thead>  
             <tbody>
             <?php
+            if (empty($lesFraisHorsForfait)) {
+                echo "<tr>"
+                . "<td>"
+                  . "<span class='fw-bold text-danger'> "
+                  . "Aucun frais hors forfait</span>"
+                . "</td>"
+                . "<td></td>"
+                . "<td></td>"
+                . "<td></td>"
+            . "</tr>";
+            } else {
             foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                 $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
                 $date = $unFraisHorsForfait['date'];
@@ -76,17 +85,40 @@
                     <td> <?php echo $date ?></td>
                     <td> <?php echo $libelle ?></td>
                     <td><?php echo $montant ?></td>
-                    <td>
-                        <a href="index.php?uc=gererFrais&action=supprimerFrais&idFrais=<?php echo $id ?>" 
-                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');">
-                            Supprimer ce frais
-                        </a>
+                    <td class="d-flex gap-1 flex-wrap">
+                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
+                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                           class="btn btn-success">
+                            Corriger
+                        </button>
+                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
+                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                           class="btn btn-danger">
+                            Réinitialiser
+                        </button>
+                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
+                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                           class="btn btn-danger">
+                            Supprimer
+                        </button>
                     </td>
                 </tr>
                 <?php
+                }
             }
             ?>
             </tbody>  
         </table>
+    </div>
+    <div class="mb-3">
+        <label for="nb-justificatifs">Nombre de justificatifs : </label>
+        <input type="number" name="nb-justificatifs"
+               id="nb-justificatifs"
+               size="2" min="0" max="25"
+               class="rounded-2"/>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-success" type="submit">Valider</button>
+        <button class="btn btn-danger" type="reset">Effacer</button>
     </div>
 </div>

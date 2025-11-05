@@ -18,6 +18,7 @@
 
 ?>
 <div class="row d-flex mt-4 gap-5">
+    <h1 class="fw-semibold">Valider les fiches de frais cloturées</h1>
     <div class="col-md-4 sm:col-md-1">
         <form action="index.php?uc=validerFrais&action=selectionnerMois" 
               method="post" role="form">
