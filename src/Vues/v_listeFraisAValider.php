@@ -17,10 +17,15 @@
  */
 
 ?>
+<?php 
+if($action == "majFraisForfait"){
+    echo "<script type='text/javascript'>confirm('Modification prise en compte.')</script>";
+} 
+?>
 <hr class="my-5">
 <div class="row">    
     <h2 class="text-warning mb-3">Valider la fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?>
+        <?php echo $numMois . '-' . $numAnnee?>
     </h2>
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
@@ -43,10 +48,16 @@
                 }
                 ?>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-success" type="submit" onClick="confirm('Modification prise en compte');">Corriger</button>
-                    <button class="btn btn-danger" type="reset">Effacer</button>
+                    <button class="btn btn-success" type="submit">Corriger</button>
+                    <button class="btn btn-danger" type="reset">Réinitialiser</button>
                 </div>
             </fieldset>
+            <select hidden id="visiteur" name="visiteur">
+                    <option selected value="<?php echo $visiteurAModifier?>"></option>
+            </select>
+            <select hidden id="mois" name="mois">
+                    <option selected value="<?php echo $moisASelectionner?>"></option>
+            </select>
         </form>
     </div>
 </div>
@@ -107,17 +118,17 @@
                         <button href="" 
                            onclick=""
                            class="btn btn-success">
-                            Corriger
+                            [Corriger]
                         </button>
                         <button href="" 
                            onclick=""
                            class="btn btn-danger">
-                            Réinitialiser
+                            [Réinitialiser]
                         </button>
                         <button href="" 
                            onclick=""
                            class="btn btn-danger">
-                            Supprimer
+                            [Supprimer]
                         </button>
                     </td>
                 </tr>
@@ -136,7 +147,7 @@
                class="rounded-2"/>
     </div>
     <div class="d-flex gap-2">
-        <button class="btn btn-success" type="submit">Valider</button>
-        <button class="btn btn-danger" type="reset">Effacer</button>
+        <button class="btn btn-success" type="submit">[Valider]</button>
+        <button class="btn btn-danger" type="reset">[Effacer]</button>
     </div>
 </div>

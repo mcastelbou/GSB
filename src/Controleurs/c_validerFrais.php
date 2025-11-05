@@ -48,4 +48,27 @@ switch ($action) {
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
+        break;
+    case 'majFraisForfait' :
+        $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
+        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
+        $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
+        include PATH_VIEWS . 'v_selectionnerMois.php';
+        
+        $numAnnee = substr($moisASelectionner, 0, 4);
+        $numMois = substr($moisASelectionner, 4, 2);
+        
+        $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
+        if (Utilitaires::lesQteFraisValides($lesFrais)) {
+            $pdo->majFraisForfait($visiteurAModifier,$moisASelectionner,$lesFrais);
+        } else {
+            Utilitaires::ajouterErreur('Les valeurs des frais doivent être numériques');
+            include PATH_VIEWS . 'v_erreurs.php';
+        }
+        
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
+        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        include PATH_VIEWS . 'v_listeFraisAValider.php';
 }
