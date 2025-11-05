@@ -24,7 +24,7 @@
     </h2>
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
-        <form method="post" role="form">
+        <form method="post" role="form" action="index.php?uc=validerFrais&action=majFraisForfait">
             <fieldset class="d-grid row-gap-3 ms-4">
                 <?php
                 foreach ($lesFraisForfait as $unFrais) {
@@ -82,22 +82,40 @@
                 $montant = $unFraisHorsForfait['montant'];
                 $id = $unFraisHorsForfait['id']; ?>           
                 <tr>
-                    <td> <?php echo $date ?></td>
-                    <td> <?php echo $libelle ?></td>
-                    <td><?php echo $montant ?></td>
+                    <td> 
+                        <input type="date" id="Date<?php echo $id?>" 
+                               name="lesFraisHorsForfait[Date<?php echo $id?>]" 
+                               size="10" maxlength="10"
+                               value="<?php echo Outils\Utilitaires::dateFrancaisVersAnglais($date) ?>"
+                               class="form-control">
+                    </td>
+                    <td>
+                        <input type="text" id="Libelle<?php echo $id?>" 
+                               name="lesFraisHorsForfait[Libelle<?php echo $id?>]" 
+                               size="10" maxlength="45"
+                               value="<?php echo $libelle?>"
+                               class="form-control">
+                    </td>
+                    <td>
+                        <input type="text" id="Montant<?php echo $id?>" 
+                               name="lesFraisHorsForfait[Montant<?php echo $id?>]" 
+                               size="6" maxlength="5"
+                               value="<?php echo $montant ?>"
+                               class="form-control">
+                    </td>
                     <td class="d-flex gap-1 flex-wrap">
-                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
-                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                        <button href="" 
+                           onclick=""
                            class="btn btn-success">
                             Corriger
                         </button>
-                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
-                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                        <button href="" 
+                           onclick=""
                            class="btn btn-danger">
                             Réinitialiser
                         </button>
-                        <button href="index.php?uc=validerFrais&action=Corriger&idFrais=<?php echo $id ?>" 
-                           onclick="return confirm('Voulez-vous vraiment supprimer ce frais?');"
+                        <button href="" 
+                           onclick=""
                            class="btn btn-danger">
                             Supprimer
                         </button>
