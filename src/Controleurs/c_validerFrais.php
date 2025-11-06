@@ -68,7 +68,43 @@ switch ($action) {
             include PATH_VIEWS . 'v_erreurs.php';
         }
         
-        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
+    case 'majFraisHorsForfait':
+        $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
+        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
+        $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
+        include PATH_VIEWS . 'v_selectionnerMois.php';
+        
+        $numAnnee = substr($moisASelectionner, 0, 4);
+        $numMois = substr($moisASelectionner, 4, 2);
+        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        
+        $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
+        $leBouton = filter_input(INPUT_POST, 'envoyerFormulaire', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $idFraisHF = substr(array_key_first($lesFraisHF),1);
+        $uneDate = $lesFraisHF["D$idFraisHF"];
+        $unLibelle = $lesFraisHF["L$idFraisHF"];
+        $unMontant = $lesFraisHF["M$idFraisHF"];
+        
+        if ($leBouton == "Corriger"){
+            Utilitaires::valideInfosFrais(Utilitaires::dateAnglaisVersFrancais($uneDate), $unLibelle , $unMontant);
+            if (Utilitaires::nbErreurs() == 0){
+                $pdo->majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);
+            } else {
+                Utilitaires::ajouterErreur('Les informations ne peuvent pas être vides');
+                include PATH_VIEWS . 'v_erreurs.php';
+            }
+        } else if ($leBouton == "Supprimer"){
+            $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
+            $idFraisHF = substr(array_key_first($lesFraisHF),1);
+            $unLibelle = "REFUSE: " . $lesFraisHF["L$idFraisHF"];
+            $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
+        }
+
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
+        include PATH_VIEWS . 'v_listeFraisAValider.php';       
 }

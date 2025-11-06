@@ -275,6 +275,32 @@ class PdoGsb {
             $requetePrepare->execute();
         }
     }
+    
+    public function majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant): void {
+        $requetePrepare = $this->connexion->prepare(
+                'UPDATE lignefraishorsforfait '
+                . 'SET lignefraishorsforfait.date = :uneDate , '
+                . 'lignefraishorsforfait.libelle = :unLibelle , '
+                . 'lignefraishorsforfait.montant = :unMontant '
+                . 'WHERE lignefraishorsforfait.id = :unIdFraisHF '
+        );
+        $requetePrepare->bindParam(':unIdFraisHF', $idFraisHF, PDO::PARAM_INT);
+        $requetePrepare->bindParam(':uneDate', $uneDate, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unLibelle', $unLibelle, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMontant', $unMontant, PDO::PARAM_INT);
+        $requetePrepare->execute();
+    }
+    
+    public function refuserFraisHorsForfait($idFraisHF, $unLibelle): void {
+        $requetePrepare = $this->connexion->prepare(
+                'UPDATE lignefraishorsforfait '
+                . 'SET lignefraishorsforfait.libelle = :unLibelle '
+                . 'WHERE lignefraishorsforfait.id = :unIdFraisHF '
+        );
+        $requetePrepare->bindParam(':unIdFraisHF', $idFraisHF, PDO::PARAM_INT);
+        $requetePrepare->bindParam(':unLibelle', $unLibelle, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
 
     /**
      * Met à jour le nombre de justificatifs de la table ficheFrais

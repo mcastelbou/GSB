@@ -93,44 +93,54 @@ if($action == "majFraisForfait"){
                 $montant = $unFraisHorsForfait['montant'];
                 $id = $unFraisHorsForfait['id']; ?>           
                 <tr>
-                    <td> 
-                        <input type="date" id="Date<?php echo $id?>" 
-                               name="lesFraisHorsForfait[Date<?php echo $id?>]" 
-                               size="10" maxlength="10"
-                               value="<?php echo Outils\Utilitaires::dateFrancaisVersAnglais($date) ?>"
-                               class="form-control">
-                    </td>
-                    <td>
-                        <input type="text" id="Libelle<?php echo $id?>" 
-                               name="lesFraisHorsForfait[Libelle<?php echo $id?>]" 
-                               size="10" maxlength="45"
-                               value="<?php echo $libelle?>"
-                               class="form-control">
-                    </td>
-                    <td>
-                        <input type="text" id="Montant<?php echo $id?>" 
-                               name="lesFraisHorsForfait[Montant<?php echo $id?>]" 
-                               size="6" maxlength="5"
-                               value="<?php echo $montant ?>"
-                               class="form-control">
-                    </td>
-                    <td class="d-flex gap-1 flex-wrap">
-                        <button href="" 
-                           onclick=""
-                           class="btn btn-success">
-                            [Corriger]
-                        </button>
-                        <button href="" 
-                           onclick=""
-                           class="btn btn-danger">
-                            [Réinitialiser]
-                        </button>
-                        <button href="" 
-                           onclick=""
-                           class="btn btn-danger">
-                            [Supprimer]
-                        </button>
-                    </td>
+                    <form method="post" role="form" 
+                        action="index.php?uc=validerFrais&action=majFraisHorsForfait">
+                        <td> 
+                            <input type="date" id="Date<?php echo $id?>" 
+                                   name="lesFraisHorsForfait[D<?php echo $id?>]" 
+                                   size="10" maxlength="10"
+                                   value="<?php echo Outils\Utilitaires::dateFrancaisVersAnglais($date) ?>"
+                                   class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" id="Libelle<?php echo $id?>" 
+                                   name="lesFraisHorsForfait[L<?php echo $id?>]" 
+                                   size="10" maxlength="45"
+                                   value="<?php echo $libelle?>"
+                                   class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" id="Montant<?php echo $id?>" 
+                                   name="lesFraisHorsForfait[M<?php echo $id?>]" 
+                                   size="6" maxlength="8"
+                                   value="<?php echo $montant ?>"
+                                   class="form-control">
+                        </td>
+                        <td class="d-flex gap-1 flex-wrap">
+                            <input class="btn btn-success"
+                                    type="submit"
+                                    value="Corriger"
+                                    name="envoyerFormulaire"/>
+                            <input class="btn btn-danger"
+                                    type="reset"
+                                    value="Réinitialiser"
+                                    name="RéinitialiserFraisHF"/>
+                            <input class="btn btn-danger"
+                                    type="submit"
+                                    value="Supprimer"
+                                    name="envoyerFormulaire"/> 
+                            <input class="btn btn-danger"
+                                    type="submit"
+                                    value="Repporter"
+                                    name="envoyerFormulaire"/> 
+                        </td>
+                        <select hidden id="visiteur" name="visiteur">
+                            <option selected value="<?php echo $visiteurAModifier?>"></option>
+                        </select>
+                        <select hidden id="mois" name="mois">
+                                <option selected value="<?php echo $moisASelectionner?>"></option>
+                        </select>
+                    </form>    
                 </tr>
                 <?php
                 }
