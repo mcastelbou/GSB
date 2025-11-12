@@ -71,6 +71,7 @@ switch ($action) {
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
+        break;
     case 'majFraisHorsForfait':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
@@ -90,19 +91,18 @@ switch ($action) {
         $unLibelle = $lesFraisHF["L$idFraisHF"];
         $unMontant = $lesFraisHF["M$idFraisHF"];
         
-        if ($leBouton == "Corriger"){
-            Utilitaires::valideInfosFrais(Utilitaires::dateAnglaisVersFrancais($uneDate), $unLibelle , $unMontant);
-            if (Utilitaires::nbErreurs() == 0){
-                $pdo->majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);
-            } else {
-                Utilitaires::ajouterErreur('Les informations ne peuvent pas être vides');
-                include PATH_VIEWS . 'v_erreurs.php';
+        Utilitaires::valideInfosFrais(Utilitaires::dateAnglaisVersFrancais($uneDate), $unLibelle , $unMontant);
+        if (Utilitaires::nbErreurs() == 0){
+            if ($leBouton == "Corriger"){    
+                $pdo->majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);              
+            } else if ($leBouton == "Supprimer"){
+                $unLibelle = "REFUSE: " . $unLibelle;
+                $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
+            } else if ($leBouton == "Reporter"){
+                $pdo->reporterFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);
             }
-        } else if ($leBouton == "Supprimer"){
-            $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
-            $idFraisHF = substr(array_key_first($lesFraisHF),1);
-            $unLibelle = "REFUSE: " . $lesFraisHF["L$idFraisHF"];
-            $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
+        } else {
+            include PATH_VIEWS . 'v_erreurs.php';
         }
 
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);

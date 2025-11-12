@@ -18,7 +18,7 @@
 
 ?>
 <?php 
-if($action == "majFraisForfait"){
+if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
     echo "<script type='text/javascript'>confirm('Modification prise en compte.')</script>";
 } 
 ?>
@@ -105,7 +105,7 @@ if($action == "majFraisForfait"){
                         <td>
                             <input type="text" id="Libelle<?php echo $id?>" 
                                    name="lesFraisHorsForfait[L<?php echo $id?>]" 
-                                   size="10" maxlength="45"
+                                   size="10" maxlength="100"
                                    value="<?php echo $libelle?>"
                                    class="form-control">
                         </td>
@@ -121,7 +121,7 @@ if($action == "majFraisForfait"){
                                     type="submit"
                                     value="Corriger"
                                     name="envoyerFormulaire"/>
-                            <input class="btn btn-danger"
+                            <input class="btn btn-secondary"
                                     type="reset"
                                     value="Réinitialiser"
                                     name="RéinitialiserFraisHF"/>
@@ -131,7 +131,7 @@ if($action == "majFraisForfait"){
                                     name="envoyerFormulaire"/> 
                             <input class="btn btn-danger"
                                     type="submit"
-                                    value="Repporter"
+                                    value="[Reporter]"
                                     name="envoyerFormulaire"/> 
                         </td>
                         <select hidden id="visiteur" name="visiteur">

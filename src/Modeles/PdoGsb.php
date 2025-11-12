@@ -302,6 +302,23 @@ class PdoGsb {
         $requetePrepare->execute();
     }
 
+    public function reporterFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant): void{
+        $laNouvelleDate = Utilitaires::getMois(Utilitaires::dateAnglaisVersFrancais($uneDate));
+        $leMois = substr($laNouvelleDate, 4, 2);
+        $LAnnee = substr($laNouvelleDate, 0, 4);
+        if ($leMois == '12'){
+            $laNouvelleDate = intval($LAnnee) + 1 . '01';
+        } else {
+            $laNouvelleDate += 1;
+        }
+        if (Utilitaires::estDateValide($laNouvelleDate) && !Utilitaires::estDateDepassee($laNouvelleDate)){
+            // creer la fiche de frais du mois prochain si elle n'existe pas encore
+            $this->creeNouveauFraisHorsForfait($idVisiteur, $mois, $libelle, $date, $montant);
+            // transmettre la ligne de fraisHF au mois suivant
+            // supprimer la ligne de fraisHF du mois actuel
+        }
+    } 
+    
     /**
      * Met à jour le nombre de justificatifs de la table ficheFrais
      * pour le mois et le visiteur concerné
@@ -381,8 +398,8 @@ class PdoGsb {
      * idEtat, crée une nouvelle fiche de frais avec un idEtat à 'CR' et crée
      * les lignes de frais forfait de quantités nulles
      *
-     * @param String $idVisiteur ID du visiteur
-     * @param String $mois       Mois sous la forme aaaamm
+     * @param String  $idVisiteur ID du visiteur
+     * @param String $mois  Mois sous la forme aaaamm
      *
      * @return null
      */
