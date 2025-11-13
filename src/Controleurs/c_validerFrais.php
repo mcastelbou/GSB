@@ -99,7 +99,7 @@ switch ($action) {
                 $unLibelle = "REFUSE: " . $unLibelle;
                 $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
             } else if ($leBouton == "Reporter"){
-                $pdo->reporterFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);
+                $pdo->reporterFraisHorsForfait($visiteurAModifier, $idFraisHF, $uneDate, $unLibelle, $unMontant);
             }
         } else {
             include PATH_VIEWS . 'v_erreurs.php';

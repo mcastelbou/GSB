@@ -302,7 +302,7 @@ class PdoGsb {
         $requetePrepare->execute();
     }
 
-    public function reporterFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant): void{
+    public function reporterFraisHorsForfait($idVisiteur, $idFraisHF, $uneDate, $unLibelle, $unMontant): void{
         $laNouvelleDate = Utilitaires::getMois(Utilitaires::dateAnglaisVersFrancais($uneDate));
         $leMois = substr($laNouvelleDate, 4, 2);
         $LAnnee = substr($laNouvelleDate, 0, 4);
@@ -311,12 +311,13 @@ class PdoGsb {
         } else {
             $laNouvelleDate += 1;
         }
-        if (Utilitaires::estDateValide($laNouvelleDate) && !Utilitaires::estDateDepassee($laNouvelleDate)){
-            // creer la fiche de frais du mois prochain si elle n'existe pas encore
-            $this->creeNouveauFraisHorsForfait($idVisiteur, $mois, $libelle, $date, $montant);
-            // transmettre la ligne de fraisHF au mois suivant
-            // supprimer la ligne de fraisHF du mois actuel
+        if($this->estPremierFraisMois($idVisiteur, $laNouvelleDate)){
+            $this->creeNouvellesLignesFrais($idVisiteur, $laNouvelleDate);
         }
+        // transmettre la ligne de fraisHF au mois suivant
+        $this->creeNouveauFraisHorsForfait($idVisiteur, $laNouvelleDate, $unLibelle, $uneDate, $unMontant);
+        // supprimer la ligne de fraisHF du mois actuel
+        $this->supprimerFraisHorsForfait($idFraisHF);
     } 
     
     /**
@@ -444,7 +445,7 @@ class PdoGsb {
      * @return null
      */
     public function creeNouveauFraisHorsForfait($idVisiteur, $mois, $libelle, $date, $montant): void {
-        $dateFr = Utilitaires::dateFrancaisVersAnglais($date);
+        //$dateFr = Utilitaires::dateFrancaisVersAnglais($date);
         $requetePrepare = $this->connexion->prepare(
                 'INSERT INTO lignefraishorsforfait '
                 . 'VALUES (null, :unIdVisiteur,:unMois, :unLibelle, :uneDateFr,'
@@ -453,7 +454,7 @@ class PdoGsb {
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unLibelle', $libelle, PDO::PARAM_STR);
-        $requetePrepare->bindParam(':uneDateFr', $dateFr, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':uneDateFr', $date, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMontant', $montant, PDO::PARAM_INT);
         $requetePrepare->execute();
     }

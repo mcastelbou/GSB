@@ -131,7 +131,7 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                                     name="envoyerFormulaire"/> 
                             <input class="btn btn-danger"
                                     type="submit"
-                                    value="[Reporter]"
+                                    value="Reporter"
                                     name="envoyerFormulaire"/> 
                         </td>
                         <select hidden id="visiteur" name="visiteur">
