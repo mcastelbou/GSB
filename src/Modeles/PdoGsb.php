@@ -244,7 +244,7 @@ class PdoGsb {
         $requetePrepare->execute();
         return $requetePrepare->fetchAll();
     }
-
+    
     /**
      * Met à jour la table ligneFraisForfait
      * Met à jour la table ligneFraisForfait pour un visiteur et
@@ -292,6 +292,7 @@ class PdoGsb {
     }
     
     public function refuserFraisHorsForfait($idFraisHF, $unLibelle): void {
+        $unLibelle = "REFUSE: " . $unLibelle;
         $requetePrepare = $this->connexion->prepare(
                 'UPDATE lignefraishorsforfait '
                 . 'SET lignefraishorsforfait.libelle = :unLibelle '
@@ -601,4 +602,54 @@ class PdoGsb {
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->execute();
     }
+    
+    public function validerFicheFrais($idVisiteur, $mois, $nbJustificatifs): void{
+        //majNbJustificatifs
+        $this->majNbJustificatifs($idVisiteur, $mois, $nbJustificatifs);
+        //majMontantValide
+        $this->majMontantValide($idVisiteur, $mois);
+        //majEtatFicheFrais
+        $this->majEtatFicheFrais($idVisiteur, $mois, "VA");
+    }
+    
+    public function majMontantValide($idVisiteur, $mois): void{
+        $montantValideTotal = $this->calculerMontantValide($idVisiteur, $mois) ;
+        $requetePrepare = $this->connexion->prepare(
+                'UPDATE fichefrais '
+                . 'SET montantvalide = :unMontant '
+                . 'WHERE fichefrais.idvisiteur = :unVisiteur '
+                . 'AND fichefrais.mois = :unMois'
+        );
+        $requetePrepare->bindParam(':unMontant', $montantValideTotal, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
+    
+    public function calculerMontantValide($idVisiteur, $mois){
+        $lesFraisHF = $this->getLesFraisHorsForfait($idVisiteur, $mois);
+        $montantTotal = $this->getMontantFraisForfait($idVisiteur, $mois);
+        foreach($lesFraisHF as $unFraisHF){
+            if(!str_contains($unFraisHF['libelle'], 'REFUSE:')){
+                $montantTotal += $unFraisHF['montant'];
+            }
+        }
+        return $montantTotal;
+    }
+    
+     public function getMontantFraisForfait($idVisiteur, $mois){
+         $requetePrepare = $this->connexion->prepare(
+                 'SELECT SUM(lignefraisforfait.quantite * fraisforfait.montant) AS total '
+                 . 'FROM lignefraisforfait '
+                 . 'JOIN fraisforfait '
+                 . 'ON lignefraisforfait.idfraisforfait = fraisforfait.id '
+                 . 'WHERE idvisiteur = :unVisiteur '
+                 . 'AND mois = :unMois'
+         );
+         $requetePrepare->bindParam(':unVisiteur', $idVisiteur, PDO::PARAM_STR);
+         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+         $requetePrepare->execute();
+         $tabMontant = $requetePrepare->fetch();
+         return $tabMontant['total'];
+     }
 }

@@ -121,7 +121,7 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                                     type="submit"
                                     value="Corriger"
                                     name="envoyerFormulaire"/>
-                            <input class="btn btn-secondary"
+                            <input class="btn btn-danger"
                                     type="reset"
                                     value="Réinitialiser"
                                     name="RéinitialiserFraisHF"/>
@@ -129,7 +129,7 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                                     type="submit"
                                     value="Supprimer"
                                     name="envoyerFormulaire"/> 
-                            <input class="btn btn-danger"
+                            <input class="btn btn-secondary"
                                     type="submit"
                                     value="Reporter"
                                     name="envoyerFormulaire"/> 
@@ -149,15 +149,25 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
             </tbody>  
         </table>
     </div>
-    <div class="mb-3">
-        <label for="nb-justificatifs">Nombre de justificatifs : </label>
-        <input type="number" name="nb-justificatifs"
-               id="nb-justificatifs"
-               size="2" min="0" max="25"
-               class="rounded-2"/>
-    </div>
-    <div class="d-flex gap-2">
-        <button class="btn btn-success" type="submit">[Valider]</button>
-        <button class="btn btn-danger" type="reset">[Effacer]</button>
-    </div>
+    <form method="post" role="form" 
+        action="index.php?uc=validerFrais&action=validerFicheFrais">
+        <div class="mb-3">
+            <label for="nb-justificatifs">Nombre de justificatifs : </label>
+            <input type="number" name="nb-justificatifs"
+                   id="nb-justificatifs"
+                   size="2" min="0" max="25"
+                   class="rounded-2"
+                   value="0"/>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-success" type="submit">Valider</button>
+            <button class="btn btn-danger" type="reset">Réinitialiser</button>
+        </div>
+        <select hidden id="visiteur" name="visiteur">
+            <option selected value="<?php echo $visiteurAModifier?>"></option>
+        </select>
+        <select hidden id="mois" name="mois">
+                <option selected value="<?php echo $moisASelectionner?>"></option>
+        </select>
+    </form>
 </div>
