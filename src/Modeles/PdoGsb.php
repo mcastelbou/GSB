@@ -132,10 +132,10 @@ class PdoGsb {
     /**
      * Retourne les informations d'un utilisateur
      *
-     * @param String $login Login de l'utilisateur
-     * @param String $mdp   Mot de passe de l'utilisateur
+     * @param String $login  Login de l'utilisateur
+     * @param String $mdp  Mot de passe de l'utilisateur
      *
-     * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
      */
     public function getInfosUtilisateur($login, $mdp): array {
         $role = $this->getRoleUtilisateur($login);
@@ -155,6 +155,13 @@ class PdoGsb {
         }
     }
 
+    /**
+     * Retourne le role correspondant au login entré par l'utilisateur
+     * 
+     * @param String $login  Login de l'utilisateur 
+     * 
+     * @return String  Le role de correspondant au login entré
+     */
     public function getRoleUtilisateur($login) : String {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT roleuser FROM role WHERE login = :unLogin'
@@ -172,10 +179,10 @@ class PdoGsb {
     /**
      * Retourne les informations d'un visiteur
      *
-     * @param String $login Login du visiteur
+     * @param String $login  Login du visiteur
      * @param String $mdp   Mot de passe du visiteur
      *
-     * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
      */
     public function getInfosVisiteur($login, $mdp): array {
         $requetePrepare = $this->connexion->prepare(
@@ -190,6 +197,14 @@ class PdoGsb {
         return $requetePrepare->fetch();
     }
 
+    /**
+     * Retourne les informations d'un comptable
+     * 
+     * @param String $login  Login du comptable
+     * @param String $mdp  Mot de passe du comptable
+     * 
+     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
+     */
     public function getInfosComptable($login, $mdp): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT comptable.id AS id, comptable.nom AS nom, '
@@ -246,7 +261,6 @@ class PdoGsb {
     }
     
     /**
-     * Met à jour la table ligneFraisForfait
      * Met à jour la table ligneFraisForfait pour un visiteur et
      * un mois donné en enregistrant les nouveaux montants
      *
@@ -276,6 +290,17 @@ class PdoGsb {
         }
     }
     
+    /**
+     * Met à jour la table ligneFraisHorsForfait en enregistrant 
+     * les nouvelles données d'un frais hors forfait donné
+     * 
+     * @param Integer $idFraisHF  L'identifiant unique d'un frais hors forfait
+     * @param String $uneDate  La date associée à un frais hors forfait
+     * @param String $unLibelle  Le libellé d'un frais hors forfait
+     * @param Float $unMontant  Le montant du frais hors forfait
+     * 
+     * @return void
+     */
     public function majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant): void {
         $requetePrepare = $this->connexion->prepare(
                 'UPDATE lignefraishorsforfait '
@@ -291,6 +316,15 @@ class PdoGsb {
         $requetePrepare->execute();
     }
     
+    /**
+     * Met a jour la table ligneFraisHorsForfait en rajoutant 'REFUSE :'
+     * au début du libellé pour un frais hors forfait donné
+     * 
+     * @param Integer $idFraisHF  L'identifiant unique d'un frais hors forfait
+     * @param string $unLibelle  Le libellé d'un frais hors forfait
+     * 
+     * @return void
+     */
     public function refuserFraisHorsForfait($idFraisHF, $unLibelle): void {
         $unLibelle = "REFUSE: " . $unLibelle;
         $requetePrepare = $this->connexion->prepare(
@@ -303,6 +337,18 @@ class PdoGsb {
         $requetePrepare->execute();
     }
 
+    /**
+     * Reporte un frais hors forfait au mois suivant en prenant garde de créer la fiche de frais
+     * du mois cible si elle n'existe pas encore
+     * 
+     * @param type $idVisiteur  L'identifiant d'un visiteur
+     * @param type $idFraisHF  L'identifiant unique d'un frais hors forfait
+     * @param type $uneDate  La date associée à un frais hors forfait
+     * @param type $unLibelle  Le libellé d'un frais hors forfait
+     * @param type $unMontant  Le montant du frais hors forfait
+     * 
+     * @return void
+     */
     public function reporterFraisHorsForfait($idVisiteur, $idFraisHF, $uneDate, $unLibelle, $unMontant): void{
         $laNouvelleDate = Utilitaires::getMois(Utilitaires::dateAnglaisVersFrancais($uneDate));
         $leMois = substr($laNouvelleDate, 4, 2);
@@ -506,6 +552,15 @@ class PdoGsb {
         return $lesMois;
     }
     
+    /**
+     * Retourne les mois pour lesquels un visiteur donné à des fiche de frais 
+     * en attente de validation
+     * 
+     * @param String $idVisiteur  L'id d'un visiteur
+     * 
+     * @return array  un tableau associatif de clé un mois -aaaamm- et de valeurs
+     *         l'année et le mois correspondant
+     */
     public function getLesMoisAValider($idVisiteur): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT fichefrais.mois AS mois FROM fichefrais '
@@ -529,6 +584,13 @@ class PdoGsb {
         return $lesMois;
     }
     
+    /**
+     * Retourne tout les visiteurs qui sont associés à des fiche de frais 
+     * en attente de validation
+     * 
+     * @return array  un tableau associatif de clé un identifiant et de valeurs
+     *         le nom et le prénom du visiteur correspondant
+     */
     public function getLesVisiteursAValider(): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
@@ -603,6 +665,17 @@ class PdoGsb {
         $requetePrepare->execute();
     }
     
+    /**
+     * Appelle les fonctions nécessaires à la modification de la table
+     * fichefrais pour passer une fiche de frais à l'état validée 
+     * 
+     * @param String  $idVisiteur  L'id d'un visiteur
+     * @param String  $mois  Le mois correspondant à la fiche de frais à valider
+     * @param int $nbJustificatifs  Le nombre de justificatifs 
+     *        fournis pour la fiche de frais
+     * 
+     * @return void
+     */
     public function validerFicheFrais($idVisiteur, $mois, $nbJustificatifs): void{
         //majNbJustificatifs
         $this->majNbJustificatifs($idVisiteur, $mois, $nbJustificatifs);
@@ -612,6 +685,15 @@ class PdoGsb {
         $this->majEtatFicheFrais($idVisiteur, $mois, "VA");
     }
     
+    /**
+     * Met a jour la table fiche frais pour actualiser le motant total valide
+     * qui sera remboursé pour un fiche de frais donnée
+     * 
+     * @param String $idVisiteur  L'id du visiteur
+     * @param String $mois  Le mois correspondant à la fiche de frais
+     * 
+     * @return void
+     */
     public function majMontantValide($idVisiteur, $mois): void{
         $montantValideTotal = $this->calculerMontantValide($idVisiteur, $mois) ;
         $requetePrepare = $this->connexion->prepare(
@@ -626,6 +708,15 @@ class PdoGsb {
         $requetePrepare->execute();
     }
     
+    /**
+     * Calcule et retourne le montant total d'une fiche de frais en ignorant 
+     * les frais hors forfait qui sont indiqués comme refusés
+     * 
+     * @param String $idVisiteur  L'id d'un visiteur
+     * @param String $mois  Le mois correspondant à la fiche de frais
+     * 
+     * @return Float le montant total valide à rembourser pour la fiche du mois
+     */
     public function calculerMontantValide($idVisiteur, $mois){
         $lesFraisHF = $this->getLesFraisHorsForfait($idVisiteur, $mois);
         $montantTotal = $this->getMontantFraisForfait($idVisiteur, $mois);
@@ -637,6 +728,14 @@ class PdoGsb {
         return $montantTotal;
     }
     
+    /**
+     * Calcule et retourne le montant des frais forfaitisés
+     * 
+     * @param String $idVisiteur  L'id d'un visiteur
+     * @param String $mois  Le mois correspondant à la fiche de frais
+     * 
+     * @return Float  le montant des frais forfaitisés
+     */
      public function getMontantFraisForfait($idVisiteur, $mois){
          $requetePrepare = $this->connexion->prepare(
                  'SELECT SUM(lignefraisforfait.quantite * fraisforfait.montant) AS total '

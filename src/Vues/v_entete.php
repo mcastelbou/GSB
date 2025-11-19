@@ -106,8 +106,8 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="index.php?uc=suivrePaiementFrais&action=selectionnerMois"
-                                   class="nav-link text-warning<?php if ($uc == 'suivrePaiementFrais') { ?>active bg-warning text-white<?php } ?>">
+                                <a href="index.php?uc=suiviFrais&action=selectionnerMois"
+                                   class="nav-link text-warning<?php if ($uc == 'suiviFrais') { ?>active bg-warning text-white<?php } ?>">
                                     <span>€</span>
                                     Suivre le paiement des fiches de frais
                                 </a>
