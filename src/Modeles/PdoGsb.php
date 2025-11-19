@@ -312,7 +312,7 @@ class PdoGsb {
         $requetePrepare->bindParam(':unIdFraisHF', $idFraisHF, PDO::PARAM_INT);
         $requetePrepare->bindParam(':uneDate', $uneDate, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unLibelle', $unLibelle, PDO::PARAM_STR);
-        $requetePrepare->bindParam(':unMontant', $unMontant, PDO::PARAM_INT);
+        $requetePrepare->bindParam(':unMontant', $unMontant, PDO::PARAM_STR);
         $requetePrepare->execute();
     }
     

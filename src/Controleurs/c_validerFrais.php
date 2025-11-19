@@ -109,20 +109,12 @@ switch ($action) {
         break;
     case 'validerFicheFrais':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
-        include PATH_VIEWS . 'v_selectionnerVisiteur.php';
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
-        include PATH_VIEWS . 'v_selectionnerMois.php';
-        
-        $numAnnee = substr($moisASelectionner, 0, 4);
-        $numMois = substr($moisASelectionner, 4, 2);
-        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
-        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
-        
+
         $nbJustificatifs = filter_input(INPUT_POST, 'nb-justificatifs', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        include PATH_VIEWS . 'v_listeFraisAValider.php';
         
         $pdo->validerFicheFrais($visiteurAModifier, $moisASelectionner, $nbJustificatifs);
+        
+        header("Refresh: 0;URL=index.php?uc=validerFrais&action=selectionnerVisiteur");
         
 }

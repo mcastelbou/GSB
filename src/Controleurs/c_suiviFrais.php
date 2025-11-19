@@ -51,4 +51,5 @@ switch ($action) {
         
         $pdo->majEtatFicheFrais($idVisiteur,$leMois,"RB");
         
+        header("Refresh: 0;URL=index.php?uc=suiviFrais&action=selectionnerFiche");
 }
