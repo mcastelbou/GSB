@@ -594,8 +594,7 @@ class PdoGsb {
     public function getLesVisiteursAValider(): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
-                . 'FROM visiteur '
-                . 'JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
+                . 'FROM visiteur JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
                 . 'WHERE idetat = "CL"'
         );
         $requetePrepare->execute();
@@ -613,6 +612,30 @@ class PdoGsb {
         return $lesVisiteurs;
     }
 
+    public function getLesInfosFichesSuivies(): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom, '
+                . 'fichefrais.mois AS mois '
+                . 'FROM visiteur JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
+                . 'WHERE idetat = "VA"'
+        );
+        $requetePrepare->execute();
+        $lesVisiteurs = array();
+        while ($laLigne = $requetePrepare->fetch()){
+            $id = $laLigne['id'];
+            $nom = $laLigne['nom'];
+            $prenom = $laLigne['prenom'];
+            $mois = $laLigne['mois'];
+            $lesVisiteurs[] = array(
+                'id' => $id,
+                'nom' => $nom,
+                'prenom' => $prenom,
+                'mois' => $mois
+            );
+        }
+        return $lesVisiteurs;
+    }
+    
     /**
      * Retourne les informations d'une fiche de frais d'un visiteur pour un
      * mois donné

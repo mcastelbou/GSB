@@ -18,17 +18,16 @@
 
 ?>
 <hr>
-<div class="card border-primary border-opacity-75">
-    <div class="card-header text-bg-primary bg-opacity-75">Fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?> : </div>
-    <div class="card-body">
+<div class="card text-bg-warning bg-opacity-75 p-0 border-warning border-opacity-50 mb-5">
+    <div class="card-header">Fiche de frais du mois <?php echo $numMois . '-' . $numAnnee ?> : </div>
+    <div class="card-body text-bg-light">
         <strong><u>Etat :</u></strong> <?php echo $libEtat ?>
         depuis le <?php echo $dateModif ?> <br> 
         <strong><u>Montant validé :</u></strong> <?php echo $montantValide ?>
     </div>
 </div>
-<div class="card border-info border-opacity-50 my-3">
-    <div class="card-header text-bg-info bg-opacity-25">Eléments forfaitisés</div>
+<div class="card text-bg-warning bg-opacity-75 p-0 border-warning border-opacity-50 mb-5">
+    <div class="card-header">Eléments forfaitisés</div>
     <table class="table table-bordered table-responsive m-0">
         <tr>
             <?php
@@ -50,8 +49,8 @@
         </tr>
     </table>
 </div>
-<div class="card border-info border-opacity-50">
-    <div class="card-header text-bg-info bg-opacity-25">Descriptif des éléments hors forfait - 
+<div class="card text-bg-warning bg-opacity-75 p-0 border-warning border-opacity-50 mb-5">
+    <div class="card-header">Descriptif des éléments hors forfait - 
         <?php echo $nbJustificatifs ?> justificatifs reçus</div>
     <table class="table table-bordered table-responsive m-0">
         <tr>
@@ -74,3 +73,13 @@
         ?>
     </table>
 </div>
+<form method="post" role="form" 
+        action="index.php?uc=suiviFrais&action=miseEnPaiement">
+        <div class="d-flex gap-2">
+            <button class="btn btn-success" type="submit">Mettre en paiement</button>
+            <button class="btn btn-danger" type="reset">Réinitialiser</button>
+        </div>
+        <select hidden id="visiteur" name="visiteur">
+            <option selected value="<?php echo $visiteurAModifier?>"></option>
+        </select>
+</form>

@@ -123,6 +123,6 @@ switch ($action) {
         $nbJustificatifs = filter_input(INPUT_POST, 'nb-justificatifs', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
         
-        $pdo->validerFicheFrais($visiteurAModifier, $moisASelectionner, $nbJustificatifs) ;
+        $pdo->validerFicheFrais($visiteurAModifier, $moisASelectionner, $nbJustificatifs);
         
 }
