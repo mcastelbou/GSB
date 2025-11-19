@@ -612,6 +612,12 @@ class PdoGsb {
         return $lesVisiteurs;
     }
 
+    /**
+     * Retourne les infos des fiches de frais qui sont en état validé
+     * 
+     * @return array  un tableau associatif de clé un identifiant et de valeurs
+     *         le nom et le prénom du visiteur et le mois de la fiche concernée
+     */
     public function getLesInfosFichesSuivies(): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom, '

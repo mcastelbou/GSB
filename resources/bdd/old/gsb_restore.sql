@@ -37,19 +37,6 @@ CREATE TABLE IF NOT EXISTS visiteur (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS comptable (
-  id char(5) NOT NULL,
-  nom char(30) DEFAULT NULL,
-  prenom char(30)  DEFAULT NULL, 
-  login char(20) DEFAULT NULL,
-  mdp char(20) DEFAULT NULL,
-  adresse char(30) DEFAULT NULL,
-  cp char(5) DEFAULT NULL,
-  ville char(30) DEFAULT NULL,
-  dateembauche date DEFAULT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB;
-
 CREATE TABLE IF NOT EXISTS fichefrais (
   idvisiteur char(5) NOT NULL,
   mois char(6) NOT NULL,
@@ -96,12 +83,7 @@ INSERT INTO etat (id, libelle) VALUES
 ('CR', 'Fiche créée, saisie en cours'),
 ('VA', 'Validée et mise en paiement');
 
--- Récupération des comptables
-INSERT INTO `comptable` VALUES
-('d327s','Deux','Ramses','d.ramses','j<3l3s4BLe','Giza Governorate','N/A','AL HARAM','0004-06-01'),
-('d948n','Doe','John','d.john','qUo1c0uB3h','1 rue du Cailloux','83500','LA SEYNE SUR MER','2025-09-03');
-
--- Récupération des visiteurs
+-- Récupération des utilisateurs
 INSERT INTO `visiteur` VALUES 
 ('a118y','Ayot','Percy','p.ayot','xiej3uuY0','91 Chemin Des Bateliers','64600','ANGLET','2014-03-03'),
 ('a134e','Artois','Valérie','v.artois','xie2IY8ee','89 rue des Lacs','14200','HÉROUVILLE-SAINT-CLAIR','1981-06-15'),

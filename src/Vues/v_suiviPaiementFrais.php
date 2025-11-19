@@ -76,8 +76,7 @@
 <form method="post" role="form" 
         action="index.php?uc=suiviFrais&action=miseEnPaiement">
         <div class="d-flex gap-2">
-            <button class="btn btn-success" type="submit">Mettre en paiement</button>
-            <button class="btn btn-danger" type="reset">Réinitialiser</button>
+            <button class="btn btn-success" type="submit">Rembourser fiche</button>
         </div>
         <select hidden id="visiteur" name="visiteur">
             <option selected value="<?php echo $visiteurAModifier?>"></option>
