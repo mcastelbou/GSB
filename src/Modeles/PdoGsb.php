@@ -216,6 +216,13 @@ class PdoGsb {
         return $requetePrepare->fetch();
     }
 
+    /**
+     * Retourne le mot de passe présent dans la BDD qui correspond au
+     * visiteur donné
+     * 
+     * @param String $login  Le login du visiteur à tester
+     * @return String  Le mot de passe correspondant
+     */
     public function getMdpVisiteur($login) {
         $requetePrepare = $this->connexion->prepare(
             'SELECT mdp '
@@ -227,6 +234,13 @@ class PdoGsb {
         return $requetePrepare->fetch(PDO::FETCH_OBJ)->mdp;
     }
     
+    /**
+     * Retourne le mot de passe présent dans la BDD qui correspond au
+     * comptable donné
+     * 
+     * @param String $login  Le login du comptable à tester
+     * @return String  Le mot de passe correspondant
+     */
     public function getMdpComptable($login) {
         $requetePrepare = $this->connexion->prepare(
             'SELECT mdp '
