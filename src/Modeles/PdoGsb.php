@@ -628,7 +628,8 @@ class PdoGsb {
     public function getLesVisiteursAValider(): array {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT DISTINCT visiteur.id AS id, visiteur.nom AS nom, visiteur.prenom AS prenom '
-                . 'FROM visiteur JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
+                . 'FROM visiteur '
+                . 'JOIN fichefrais ON visiteur.id = fichefrais.idvisiteur '
                 . 'WHERE idetat = "CL"'
         );
         $requetePrepare->execute();
