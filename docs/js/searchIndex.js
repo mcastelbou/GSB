@@ -311,6 +311,16 @@ Search.appendIndex(
             "summary": "Retourne\u0020tout\u0020les\u0020visiteurs\u0020qui\u0020sont\u0020associ\u00E9s\u0020\u00E0\u0020des\u0020fiche\u0020de\u0020frais\nen\u0020attente\u0020de\u0020validation",
             "url": "classes/Modeles-PdoGsb.html#method_getLesVisiteursAValider"
         },                {
+            "fqsen": "\\Modeles\\PdoGsb\u003A\u003AgetLesTypesVehicules\u0028\u0029",
+            "name": "getLesTypesVehicules",
+            "summary": "Retourne\u0020l\u0027ensemble\u0020des\u0020diff\u00E9rents\u0020types\u0020de\u0020v\u00E9hicules\u0020indemnis\u00E9s\nainsi\u0020que\u0020leur\u0020description\u0020plus\u0020d\u00E9taill\u00E9e\u0020\u0028libelle\u0029",
+            "url": "classes/Modeles-PdoGsb.html#method_getLesTypesVehicules"
+        },                {
+            "fqsen": "\\Modeles\\PdoGsb\u003A\u003AgetTypeVehiculeFicheFrais\u0028\u0029",
+            "name": "getTypeVehiculeFicheFrais",
+            "summary": "Retourne\u0020le\u0020type\u0020de\u0020v\u00E9hicule\u0020associ\u00E9\u0020\u00E0\u0020une\u0020fiche\u0020de\u0020frais\u0020d\u0027un\u0020visiteur",
+            "url": "classes/Modeles-PdoGsb.html#method_getTypeVehiculeFicheFrais"
+        },                {
             "fqsen": "\\Modeles\\PdoGsb\u003A\u003AgetLesInfosFichesSuivies\u0028\u0029",
             "name": "getLesInfosFichesSuivies",
             "summary": "Retourne\u0020les\u0020infos\u0020des\u0020fiches\u0020de\u0020frais\u0020qui\u0020sont\u0020en\u0020\u00E9tat\u0020valid\u00E9",

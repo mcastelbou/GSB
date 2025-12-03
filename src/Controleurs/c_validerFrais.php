@@ -47,6 +47,11 @@ switch ($action) {
         $numMois = substr($moisASelectionner, 4, 2);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        
+        $lesTypesVehicule = $pdo->getLesTypesVehicules();
+        $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
+        
+        
         include PATH_VIEWS . 'v_listeFraisAValider.php';
         break;
     case 'majFraisForfait' :
@@ -98,7 +103,7 @@ switch ($action) {
             } else if ($leBouton == "Supprimer"){
                 $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
             } else if ($leBouton == "Reporter"){
-                $pdo->reporterFraisHorsForfait($visiteurAModifier, $idFraisHF, $uneDate, $unLibelle, $unMontant);
+                $pdo->reporterFraisHorsForfait($visiteurAModifier, $moisASelectionner, $idFraisHF, $uneDate, $unLibelle, $unMontant);
             }
         } else {
             include PATH_VIEWS . 'v_erreurs.php';

@@ -383,8 +383,8 @@ class PdoGsb {
      * 
      * @return void
      */
-    public function reporterFraisHorsForfait($idVisiteur, $idFraisHF, $uneDate, $unLibelle, $unMontant): void{
-        $laNouvelleDate = Utilitaires::getMois(Utilitaires::dateAnglaisVersFrancais($uneDate));
+    public function reporterFraisHorsForfait($idVisiteur, $mois/*, $idFraisHF, $uneDate, $unLibelle, $unMontant*/): void{
+        $laNouvelleDate = $mois;
         $leMois = substr($laNouvelleDate, 4, 2);
         $LAnnee = substr($laNouvelleDate, 0, 4);
         if ($leMois == '12'){
@@ -395,6 +395,7 @@ class PdoGsb {
         if($this->estPremierFraisMois($idVisiteur, $laNouvelleDate)){
             $this->creeNouvellesLignesFrais($idVisiteur, $laNouvelleDate);
         }
+        
         // transmettre la ligne de fraisHF au mois suivant
         $this->creeNouveauFraisHorsForfait($idVisiteur, $laNouvelleDate, $unLibelle, $uneDate, $unMontant);
         // supprimer la ligne de fraisHF du mois actuel
@@ -647,6 +648,52 @@ class PdoGsb {
         return $lesVisiteurs;
     }
 
+    /**
+     * Retourne l'ensemble des différents types de véhicules indemnisés
+     * ainsi que leur description plus détaillée (libelle)
+     * 
+     * @return array  un tableau associatif de clé un code detype de véhicule
+     *         et de valeur la description plus détaillée de ce code
+     */
+    public function getLesTypesVehicules(): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT typevehicule.codevehicule AS code, typevehicule.libelle AS libelle '
+                . 'FROM typevehicule'
+        );
+        $requetePrepare->execute();
+        $lesTypes = array();
+        while ($laLigne = $requetePrepare->fetch()){
+            $code = $laLigne['code'];
+            $libelle = $laLigne['libelle'];
+            $lesTypes[] = array(
+                'code' => $code,
+                'libelle' => $libelle
+            );
+        }
+        return $lesTypes;
+    }
+    
+    /**
+     * Retourne le type de véhicule associé à une fiche de frais d'un visiteur
+     * 
+     * @param String $idVisiteur  L'id d'un visiteur
+     * @param String $mois  Le mois de la fiche de frais en cours de traitement
+     * @return array  un taleau associatif de clé code de catégorie de véhicule 
+     *         et de valeur la description plus détaillée de ce code
+     */
+    public function getTypeVehiculeFicheFrais($idVisiteur, $mois): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT typevehicule.codevehicule AS code, typevehicule.libelle AS libelle '
+                . 'FROM vehiculefraisforfait '
+                . 'JOIN typevehicule ON vehiculefraisforfait.codevehicule = typevehicule.codevehicule '
+                . 'WHERE idvisiteur = :unIdVisiteur AND mois = :unMois'
+        );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        return $requetePrepare->fetch();
+    }
+    
     /**
      * Retourne les infos des fiches de frais qui sont en état validé
      * 
