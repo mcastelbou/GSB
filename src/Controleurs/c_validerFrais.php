@@ -51,7 +51,6 @@ switch ($action) {
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
         
-        
         include PATH_VIEWS . 'v_listeFraisAValider.php';
         break;
     case 'majFraisForfait' :

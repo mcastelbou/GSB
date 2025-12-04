@@ -24,6 +24,13 @@ CREATE TABLE IF NOT EXISTS etat (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS typevehicule (
+  codevehicule CHAR(7) NOT NULL,
+  libelle VARCHAR(20) NULL,
+  coefindemnite DOUBLE NULL,
+  PRIMARY KEY (codevehicule)
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS visiteur (
   id char(5) NOT NULL,
   nom char(30) DEFAULT NULL,
@@ -83,6 +90,15 @@ CREATE TABLE IF NOT EXISTS lignefraishorsforfait (
   FOREIGN KEY (idvisiteur, mois) REFERENCES fichefrais(idvisiteur, mois)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS vehiculefraisforfait (
+  idvisiteur CHAR(5) NOT NULL,
+  mois CHAR(6) NOT NULL,
+  codevehicule CHAR(7) NULL,
+  PRIMARY KEY (idvisiteur, mois),
+  FOREIGN KEY (idvisiteur, mois) REFERENCES fichefrais (idvisiteur, mois),
+  FOREIGN KEY (codevehicule) REFERENCES typevehicule (codevehicule)
+) ENGINE=InnoDB;
+
 -- Alimentation des données paramètres
 INSERT INTO fraisforfait (id, libelle, montant) VALUES
 ('ETP', 'Forfait Etape', 110.00),
@@ -95,6 +111,14 @@ INSERT INTO etat (id, libelle) VALUES
 ('CL', 'Saisie clôturée'),
 ('CR', 'Fiche créée, saisie en cours'),
 ('VA', 'Validée et mise en paiement');
+
+INSERT INTO typevehicule (codevehicule, libelle, coefindemnite) VALUES
+('4//D','4CV Diesel',0.52),
+('5/6//D','5/6CV Diesel',0.58),
+('4//E','4CV Essence',0.62),
+('5/6//E','5/6CV Essence',0.67);
+
+
 
 -- Récupération des comptables
 INSERT INTO `comptable` VALUES

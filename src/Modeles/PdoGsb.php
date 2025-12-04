@@ -681,9 +681,9 @@ class PdoGsb {
      * @return array  un taleau associatif de clé code de catégorie de véhicule 
      *         et de valeur la description plus détaillée de ce code
      */
-    public function getTypeVehiculeFicheFrais($idVisiteur, $mois): array {
+    public function getTypeVehiculeFicheFrais($idVisiteur, $mois): String {
         $requetePrepare = $this->connexion->prepare(
-                'SELECT typevehicule.codevehicule AS code, typevehicule.libelle AS libelle '
+                'SELECT typevehicule.codevehicule AS code '
                 . 'FROM vehiculefraisforfait '
                 . 'JOIN typevehicule ON vehiculefraisforfait.codevehicule = typevehicule.codevehicule '
                 . 'WHERE idvisiteur = :unIdVisiteur AND mois = :unMois'
@@ -691,7 +691,11 @@ class PdoGsb {
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->execute();
-        return $requetePrepare->fetch();
+        $laLigne = $requetePrepare->fetch();
+        if (!is_array($laLigne)){
+            $laLigne = array( 'code' => "");
+        }
+        return $laLigne['code'];
     }
     
     /**

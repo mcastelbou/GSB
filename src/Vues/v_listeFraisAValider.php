@@ -36,35 +36,38 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                     $idFrais = $unFrais['idfrais'];
                     $libelle = htmlspecialchars($unFrais['libelle']);
                     $quantite = $unFrais['quantite']; ?>
-                    <div class="form-group">
-                        <label for="<?php echo $idFrais ?>" class="fw-semibold"><?php echo $libelle ?></label>
-                        <input type="text" id="<?php echo $idFrais ?>" 
-                               name="lesFrais[<?php echo $idFrais ?>]"
-                               size="10" maxlength="5" 
-                               value="<?php echo $quantite ?>" 
-                               class="form-control">
+                <div class="form-group">
+                    <label for="<?php echo $idFrais ?>" class="fw-semibold"><?php echo $libelle ?></label>
+                    <input type="text" id="<?php echo $idFrais ?>" 
+                           name="lesFrais[<?php echo $idFrais ?>]"
+                           size="10" maxlength="5" 
+                           value="<?php echo $quantite ?>" 
+                           class="form-control">
                     <?php
                     if ($idFrais == "KM"){?>
+                    <div class="">
                         <select id="CV" name="lesFrais[CV]" class="form-control">
-                            <option hidden value="">Choisir un type de véhicule</option>
+                            <option hidden value="placeholder">Choisir un type de véhicule</option>
                         <?php 
                         foreach ($lesTypesVehicule as $typeVehicule) {
                             $libelleType = $typeVehicule['libelle'];
                             $codeType = $typeVehicule['code'];
-                            if ($codeType == $typeASelectionner['code']) { ?>
-                            <option selected value="<?php echo $codeType?>">
-                            <?php echo $libelleType?></option>
+                            if ($codeType == $typeASelectionner) { ?>
+                                <option selected value="<?php echo $codeType?>">
+                                    <?php echo $libelleType?></option>
                                 <?php
                             } else { ?>
-                            <option value="<?php echo $codeType?>">
-                            <?php echo $libelleType?></option>
+                                <option value="<?php echo $codeType?>">
+                                    <?php echo $libelleType?></option>
                             <?php
                             }
                         }?>
                         </select>
                     </div>
                     <?php
-                    }
+                    }?>
+                </div>
+                <?php
                 }?>
                 <div class="d-flex gap-2">
                     <button class="btn btn-success" type="submit">Corriger</button>
