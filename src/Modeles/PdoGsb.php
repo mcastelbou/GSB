@@ -308,20 +308,73 @@ class PdoGsb {
     public function majFraisForfait($idVisiteur, $mois, $lesFrais): void {
         $lesCles = array_keys($lesFrais);
         foreach ($lesCles as $unIdFrais) {
-            $qte = $lesFrais[$unIdFrais];
-            $requetePrepare = $this->connexion->prepare(
-                    'UPDATE lignefraisforfait '
-                    . 'SET lignefraisforfait.quantite = :uneQte '
-                    . 'WHERE lignefraisforfait.idvisiteur = :unIdVisiteur '
-                    . 'AND lignefraisforfait.mois = :unMois '
-                    . 'AND lignefraisforfait.idfraisforfait = :idFrais'
-            );
-            $requetePrepare->bindParam(':uneQte', $qte, PDO::PARAM_INT);
-            $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
-            $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
-            $requetePrepare->bindParam(':idFrais', $unIdFrais, PDO::PARAM_STR);
-            $requetePrepare->execute();
+            if ($unIdFrais != "CV"){
+                $qte = $lesFrais[$unIdFrais];
+                $requetePrepare = $this->connexion->prepare(
+                        'UPDATE lignefraisforfait '
+                        . 'SET lignefraisforfait.quantite = :uneQte '
+                        . 'WHERE lignefraisforfait.idvisiteur = :unIdVisiteur '
+                        . 'AND lignefraisforfait.mois = :unMois '
+                        . 'AND lignefraisforfait.idfraisforfait = :idFrais'
+                );
+                $requetePrepare->bindParam(':uneQte', $qte, PDO::PARAM_INT);
+                $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+                $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+                $requetePrepare->bindParam(':idFrais', $unIdFrais, PDO::PARAM_STR);
+                $requetePrepare->execute();
+            } else {
+                if (empty($this->getTypeVehiculeFicheFrais($idVisiteur, $mois))){
+                    $this->ajouterTypeVehicule($idVisiteur, $mois, $lesFrais[$unIdFrais]);
+                } else {
+                    $this->majTypeVehicule($idVisiteur, $mois, $lesFrais[$unIdFrais]);
+                }
+                
+            }
         }
+    }
+    
+    /**
+     * Met à jour a table vehiculefraisforfait en enregistrant le type de 
+     * véhicule choisi par un visiteur pour une fiche de frais donnée
+     * 
+     * @param String $idVisiteur  L'id d'un visiteur
+     * @param String $mois  Le mois associé à la fiche de frais traitée
+     * @param String $typeVehiculeFrais  Le code du type de véhicule choisi
+     * 
+     * @return void
+     */
+    public function majTypeVehicule($idVisiteur, $mois, $typeVehiculeFrais): void{
+        $requetePrepare = $this->connexion->prepare(
+                'UPDATE vehiculefraisforfait '
+                . 'SET vehiculefraisforfait.codevehicule = :unTypeVehicule '
+                . 'WHERE vehiculefraisforfait.idvisiteur = :unIdVisiteur '
+                . 'AND vehiculefraisforfait.mois = :unMois'
+        );
+        $requetePrepare->bindParam(':unTypeVehicule', $typeVehiculeFrais, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+    }
+    
+    /**
+     * Créé dans la table vehiculefraisforfait un enregistrement du type
+     * de vehicule choisi par un visiteur pour une fiche de frais donnée
+     * 
+     * @param String $idVisiteur  L'id du visiteur
+     * @param String $mois  Le mois associé à la fiche de frais traitée
+     * @param String $typeVehiculeFrais  Le code du type de véhicule choisi
+     * 
+     * @return void
+     */
+    public function ajouterTypeVehicule($idVisiteur, $mois, $typeVehiculeFrais): void{
+        $requetePrepare = $this->connexion->prepare(
+                'INSERT INTO vehiculefraisforfait (idvisiteur,mois,codevehicule) '
+                . 'VALUES (:unIdVisiteur,:unMois,:unTypeVehicule)'
+        );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unTypeVehicule', $typeVehiculeFrais, PDO::PARAM_STR);
+        $requetePrepare->execute();
     }
     
     /**

@@ -45,11 +45,13 @@ switch ($action) {
         
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
-        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
-        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
+        
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
+        $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
+        
         
         include PATH_VIEWS . 'v_listeFraisAValider.php';
         break;
@@ -72,6 +74,9 @@ switch ($action) {
             include PATH_VIEWS . 'v_erreurs.php';
         }
         
+        $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
+        $lesTypesVehicule = $pdo->getLesTypesVehicules();
+        
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
@@ -86,6 +91,9 @@ switch ($action) {
         
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
+        $lesTypesVehicule = $pdo->getLesTypesVehicules();
+        $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
+        
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         
         $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT , FILTER_FORCE_ARRAY);

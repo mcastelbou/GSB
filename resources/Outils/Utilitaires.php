@@ -126,6 +126,7 @@ abstract class Utilitaires
      */
     public static function estTableauEntiers($tabEntiers): bool
     {
+        unset($tabEntiers['CV']);
         $boolReturn = true;
         foreach ($tabEntiers as $unEntier) {
             if (!self::estEntierPositif($unEntier)) {

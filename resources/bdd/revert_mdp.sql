@@ -538,5 +538,3 @@ UPDATE visiteur SET mdp = 'eis1Sai9ao' WHERE id = 'v627n';
 UPDATE visiteur SET mdp = 'ua4Be4shae1' WHERE id = 'v889e';
 UPDATE visiteur SET mdp = 'lahQu0uD' WHERE id = 'v893t';
 UPDATE visiteur SET mdp = 'tuiH6ohdui' WHERE id = 'v959e';
-UPDATE comptable SET mdp = 'j<3l3s4BLe' WHERE id = 'd327s';
-UPDATE comptable SET mdp = 'qUo1c0uB3h' WHERE id = 'd948n';

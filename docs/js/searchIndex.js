@@ -251,6 +251,16 @@ Search.appendIndex(
             "summary": "Met\u0020\u00E0\u0020jour\u0020la\u0020table\u0020ligneFraisForfait\u0020pour\u0020un\u0020visiteur\u0020et\nun\u0020mois\u0020donn\u00E9\u0020en\u0020enregistrant\u0020les\u0020nouveaux\u0020montants",
             "url": "classes/Modeles-PdoGsb.html#method_majFraisForfait"
         },                {
+            "fqsen": "\\Modeles\\PdoGsb\u003A\u003AmajTypeVehicule\u0028\u0029",
+            "name": "majTypeVehicule",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020a\u0020table\u0020vehiculefraisforfait\u0020en\u0020enregistrant\u0020le\u0020type\u0020de\nv\u00E9hicule\u0020choisi\u0020par\u0020un\u0020visiteur\u0020pour\u0020une\u0020fiche\u0020de\u0020frais\u0020donn\u00E9e",
+            "url": "classes/Modeles-PdoGsb.html#method_majTypeVehicule"
+        },                {
+            "fqsen": "\\Modeles\\PdoGsb\u003A\u003AajouterTypeVehicule\u0028\u0029",
+            "name": "ajouterTypeVehicule",
+            "summary": "Cr\u00E9\u00E9\u0020dans\u0020la\u0020table\u0020vehiculefraisforfait\u0020un\u0020enregistrement\u0020du\u0020type\nde\u0020vehicule\u0020choisi\u0020par\u0020un\u0020visiteur\u0020pour\u0020une\u0020fiche\u0020de\u0020frais\u0020donn\u00E9e",
+            "url": "classes/Modeles-PdoGsb.html#method_ajouterTypeVehicule"
+        },                {
             "fqsen": "\\Modeles\\PdoGsb\u003A\u003AmajFraisHorsForfait\u0028\u0029",
             "name": "majFraisHorsForfait",
             "summary": "Met\u0020\u00E0\u0020jour\u0020la\u0020table\u0020ligneFraisHorsForfait\u0020en\u0020enregistrant\nles\u0020nouvelles\u0020donn\u00E9es\u0020d\u0027un\u0020frais\u0020hors\u0020forfait\u0020donn\u00E9",

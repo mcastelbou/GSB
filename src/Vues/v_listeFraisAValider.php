@@ -45,25 +45,23 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                            class="form-control">
                     <?php
                     if ($idFrais == "KM"){?>
-                    <div class="">
-                        <select id="CV" name="lesFrais[CV]" class="form-control">
-                            <option hidden value="placeholder">Choisir un type de véhicule</option>
-                        <?php 
-                        foreach ($lesTypesVehicule as $typeVehicule) {
-                            $libelleType = $typeVehicule['libelle'];
-                            $codeType = $typeVehicule['code'];
-                            if ($codeType == $typeASelectionner) { ?>
-                                <option selected value="<?php echo $codeType?>">
-                                    <?php echo $libelleType?></option>
-                                <?php
-                            } else { ?>
-                                <option value="<?php echo $codeType?>">
-                                    <?php echo $libelleType?></option>
+                    <select id="CV" name="lesFrais[CV]" class="form-control">
+                        <option hidden value="placeholder">Choisir un type de véhicule</option>
+                    <?php 
+                    foreach ($lesTypesVehicule as $typeVehicule) {
+                        $libelleType = $typeVehicule['libelle'];
+                        $codeType = $typeVehicule['code'];
+                        if ($codeType == $typeASelectionner) { ?>
+                            <option selected value="<?php echo $codeType?>">
+                                <?php echo $libelleType?></option>
                             <?php
-                            }
-                        }?>
-                        </select>
-                    </div>
+                        } else { ?>
+                            <option value="<?php echo $codeType?>">
+                                <?php echo $libelleType?></option>
+                        <?php
+                        }
+                    }?>
+                    </select>
                     <?php
                     }?>
                 </div>
