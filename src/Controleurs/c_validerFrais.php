@@ -76,7 +76,7 @@ switch ($action) {
         
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
-        
+                
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';

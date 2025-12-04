@@ -885,7 +885,7 @@ class PdoGsb {
      * 
      * @return Float le montant total valide à rembourser pour la fiche du mois
      */
-    public function calculerMontantValide($idVisiteur, $mois){
+    public function calculerMontantValide($idVisiteur, $mois): float{
         $lesFraisHF = $this->getLesFraisHorsForfait($idVisiteur, $mois);
         $montantTotal = $this->getMontantFraisForfait($idVisiteur, $mois);
         foreach($lesFraisHF as $unFraisHF){
@@ -904,19 +904,51 @@ class PdoGsb {
      * 
      * @return Float  le montant des frais forfaitisés
      */
-     public function getMontantFraisForfait($idVisiteur, $mois){
+     public function getMontantFraisForfait($idVisiteur, $mois): float{
          $requetePrepare = $this->connexion->prepare(
                  'SELECT SUM(lignefraisforfait.quantite * fraisforfait.montant) AS total '
                  . 'FROM lignefraisforfait '
                  . 'JOIN fraisforfait '
                  . 'ON lignefraisforfait.idfraisforfait = fraisforfait.id '
                  . 'WHERE idvisiteur = :unVisiteur '
-                 . 'AND mois = :unMois'
+                 . 'AND mois = :unMois '
+                 . 'AND idfraisforfait != "KM"'
          );
          $requetePrepare->bindParam(':unVisiteur', $idVisiteur, PDO::PARAM_STR);
          $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
          $requetePrepare->execute();
          $tabMontant = $requetePrepare->fetch();
-         return $tabMontant['total'];
+         return $tabMontant['total'] + $this->getMontantIndemniteKilometrique($idVisiteur, $mois);
+     }
+     
+     /**
+      * Retourne le montant de l'indemnisation des frais kilométrique 
+      * en fonction du type de vehicule pour un visiteur et un mois donnés
+      * 
+      * @param String $idVisiteur  L'id d'un visiteur
+      * @param Sting $mois  Le mois associé à la fiche de frais traitée
+      * 
+      * @return float  le montant de l'indemnisation kilométrique après calcul
+      *         en fonction du type de vehicule entré en base de donnée
+      */
+     public function getMontantIndemniteKilometrique($idVisiteur, $mois): float{
+         $requetePrepare = $this->connexion->prepare(
+                 'SELECT (lignefraisforfait.quantite * typevehicule.coefindemnite) AS indemnite '
+                 . 'FROM lignefraisforfait '
+                 . 'JOIN vehiculefraisforfait '
+                 . 'ON lignefraisforfait.idvisiteur = vehiculefraisforfait.idvisiteur '
+                 . 'JOIN typevehicule '
+                 . 'ON vehiculefraisforfait.codevehicule = typevehicule.codevehicule '
+                 . 'WHERE lignefraisforfait.idvisiteur = :unIdVisiteur '
+                 . 'AND vehiculefraisforfait.idvisiteur = :unIdVisiteur '
+                 . 'AND lignefraisforfait.mois = :unMois '
+                 . 'AND vehiculefraisforfait.mois = :unMois '
+                 . 'AND idfraisforfait = "KM"'
+         );
+         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+         $requetePrepare->execute();
+         $tabMontant = $requetePrepare->fetch();
+         return $tabMontant['indemnite'];
      }
 }
