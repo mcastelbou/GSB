@@ -11,7 +11,6 @@
  * @author    José GIL - CNED <jgil@ac-nice.fr>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
- * @version   GIT: <0>
  * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
  */
 /**
@@ -69,7 +68,7 @@ class PdoGsb {
      * Fonction statique qui crée l'unique instance de la classe
      * Appel : $instancePdoGsb = PdoGsb::getPdoGsb();
      *
-     * @return l'unique objet de la classe PdoGsb
+     * @return PdoGsb  l'unique objet de la classe PdoGsb
      */
     public static function getPdoGsb(): PdoGsb {
         if (self::$instance == null) {
@@ -135,7 +134,7 @@ class PdoGsb {
      * @param String $login  Login de l'utilisateur
      * @param String $mdp  Mot de passe de l'utilisateur
      *
-     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return array  L'id, le nom et le prénom sous la forme d'un tableau associatif
      */
     public function getInfosUtilisateur($login, $mdp): array {
         $role = $this->getRoleUtilisateur($login);
@@ -182,7 +181,8 @@ class PdoGsb {
      * @param String $login  Login du visiteur
      * @param String $mdp   Mot de passe du visiteur
      *
-     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return array  L'id, le nom et le prénom sous la forme 
+     *         d'un tableau associatif
      */
     public function getInfosVisiteur($login): array {
         $requetePrepare = $this->connexion->prepare(
@@ -202,7 +202,8 @@ class PdoGsb {
      * @param String $login  Login du comptable
      * @param String $mdp  Mot de passe du comptable
      * 
-     * @return  L'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return array  L'id, le nom et le prénom sous la forme 
+     *         d'un tableau associatif
      */
     public function getInfosComptable($login): array {
         $requetePrepare = $this->connexion->prepare(
@@ -259,8 +260,8 @@ class PdoGsb {
      * @param String $idVisiteur ID du visiteur
      * @param String $mois       Mois sous la forme aaaamm
      *
-     * @return l'id, le libelle et la quantité sous la forme d'un tableau
-     * associatif
+     * @return array  l'id, le libelle et la quantité sous la forme 
+     *         d'un tableau associatif
      */
     public function getLesFraisForfait($idVisiteur, $mois): array {
         $requetePrepare = $this->connexion->prepare(
