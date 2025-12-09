@@ -38,10 +38,30 @@
                                size="10" maxlength="5" 
                                value="<?php echo $quantite ?>" 
                                class="form-control">
-                    </div>
                     <?php
-                }
-                ?>
+                    if ($idFrais == "KM"){?>
+                    <select id="CV" name="lesFrais[CV]" class="form-control">
+                        <option hidden value="placeholder">Choisir un type de véhicule</option>
+                    <?php 
+                    foreach ($lesTypesVehicule as $typeVehicule) {
+                        $libelleType = $typeVehicule['libelle'];
+                        $codeType = $typeVehicule['code'];
+                        if ($codeType == $typeASelectionner) { ?>
+                            <option selected value="<?php echo $codeType?>">
+                                <?php echo $libelleType?></option>
+                            <?php
+                        } else { ?>
+                            <option value="<?php echo $codeType?>">
+                                <?php echo $libelleType?></option>
+                        <?php
+                        }
+                    }?>
+                    </select>
+                    <?php
+                    }?>
+                </div>
+                <?php
+                }?>
                 <div class="d-flex gap-3">
                     <button class="btn btn-success" type="submit">Ajouter</button>
                     <button class="btn btn-danger" type="reset">Effacer</button>

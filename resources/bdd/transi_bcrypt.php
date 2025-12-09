@@ -1,6 +1,6 @@
 <?php
 
-$pdo = new PDO('mysql:host=localhost;dbname=gsb_frais','userGsb','secret');
+$pdo = new PDO('mysql:host=10.20.3.47;dbname=gsb_frais','adminmariadb','P@ssw0rdMARIADB');
 $pdo->query('SET CHARACTER SET utf8');
 
 $req = $pdo->prepare('use gsb_frais; ALTER TABLE visiteur MODIFY mdp CHAR(60)');

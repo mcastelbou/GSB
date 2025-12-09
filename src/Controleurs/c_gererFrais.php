@@ -20,6 +20,7 @@ $idVisiteur = $_SESSION['idUser'];
 $mois = Utilitaires::getMois(date('d/m/Y'));
 $numAnnee = substr($mois, 0, 4);
 $numMois = substr($mois, 4, 2);
+$typeASelectionner = $pdo->getTypeVehiculeFicheFrais($idVisiteur, $mois);
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 switch ($action) {
     case 'saisirFrais':
@@ -54,6 +55,7 @@ switch ($action) {
         $pdo->supprimerFraisHorsForfait($idFrais);
         break;
 }
+$lesTypesVehicule = $pdo->getLesTypesVehicules();
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
 $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
 require PATH_VIEWS . 'v_listeFraisForfait.php';

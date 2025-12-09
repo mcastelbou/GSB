@@ -7152,6 +7152,9 @@ INSERT INTO `fichefrais` VALUES
 ('v959e','202507',0,3524.52,'2025-08-01','VA'),
 ('v959e','202508',1,0.00,'2025-08-08','CR');
 
+-- Création de la vue pour récupérer le role de l'utilisateur
+CREATE VIEW role (login,roleuser) AS SELECT login, "visiteur" FROM visiteur UNION SELECT login, "comptable" FROM comptable;
+
 -- Récupération des lignes de frais forfaitisés
 INSERT INTO `lignefraisforfait` VALUES 
 ('a118y','202409','ETP',4),
