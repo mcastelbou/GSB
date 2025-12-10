@@ -73,3 +73,8 @@
         ?>
     </table>
 </div>
+<div>
+    <a class="btn btn-secondary mt-3" href="./getpdf.php" target="_blank">
+        Afficher au format PDF
+    </a>
+</div>

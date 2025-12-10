@@ -52,8 +52,47 @@ class PdoGsb {
      * pour toutes les méthodes de la classe
      */
     private function __construct() {
+        
+        // Version Standard
+        /**/
         $this->connexion = new PDO(DB_DSN, DB_USER, DB_PWD);
         $this->connexion->query('SET CHARACTER SET utf8');
+        /**/
+        
+        // Version Master/Slave
+        /*
+        try {
+            $this->connexion = new PDO(DB_DSN, DB_USER, DB_PWD);
+        } catch (\PDOException $e) {
+            try {
+                $this->connexion = new PDO(DB_DSN_SECOURS, DB_USER_SECOURS, DB_PWD);
+            } catch (\PDOException $e) {
+                die();
+            }
+        }
+        */
+        
+        // Version Master/Master 
+        /*
+        try {
+            $serveurs = DB_URL;
+            shuffle($serveurs);
+            $this->connexion = new PDO("mysql:host=" . $serveurs[0] . ";dbname=" . DB_NAME . ";charset=UTF8", DB_USER, DB_PWD);
+            $this->connexion->query('SET CHARACTER SET utf8');
+            print_r("Test 1 : Connecté sur " . $serveurs[0]);
+        } catch (\PDOException $e) {
+            try {
+                $this->connexion = new PDO("mysql:host=" . $serveurs[1] . ";dbname=" . DB_NAME . ";charset=UTF8", DB_USER, DB_PWD);
+                $this->connexion->query('SET CHARACTER SET utf8');
+                print_r("Test 2 : Connecté sur " . $serveurs[1]);
+            } catch (\PDOException $e) {
+                Utilitaires::ajouterErreur("Les bases de données ne sont actuellement pas disponibles.");
+                Utilitaires::ajouterErreur("Veuillez réessayer dans quelques minutes.");
+                include PATH_VIEWS . 'v_erreurs.php';
+            }
+        }
+        */
+
     }
 
     /**

@@ -29,6 +29,12 @@ switch ($action) {
         $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $user = $pdo->getInfosUtilisateur($login, $mdp);
+        if (empty($user)){
+            Utilitaires::ajouterErreur('Login ou mot de passe incorrect.');
+            include PATH_VIEWS . 'v_erreurs.php';
+            include PATH_VIEWS . 'v_connexion.php';
+            break;
+        }
         $mdpBdd = null;
         if ($user['role'] == "visiteur"){
             $mdpBdd = $pdo->getMdpVisiteur($login);
@@ -36,7 +42,7 @@ switch ($action) {
             $mdpBdd = $pdo->getMdpComptable($login);
         }
         if (!password_verify($mdp, $mdpBdd)) {
-            Utilitaires::ajouterErreur('Login ou mot de passe incorrect');
+            Utilitaires::ajouterErreur('Login ou mot de passe incorrect.');
             include PATH_VIEWS . 'v_erreurs.php';
             include PATH_VIEWS . 'v_connexion.php';
         } else {
