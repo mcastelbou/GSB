@@ -74,7 +74,19 @@
     </table>
 </div>
 <div>
-    <a class="btn btn-secondary mt-3" href="./getpdf.php" target="_blank">
-        Afficher au format PDF
-    </a>
+    <?php
+    if ($_SESSION['idUser'] == $idVisiteur){
+    ?>
+    <form method="post" role="form" action="getpdf.php" target="_blank">
+        <input class="btn btn-secondary mt-3" value="Afficher au format PDF" type="submit"/>
+        <select hidden id="visiteur" name="visiteur">
+                    <option selected value="<?php echo $idVisiteur?>"></option>
+        </select>
+        <select hidden id="mois" name="mois">
+                    <option selected value="<?php echo $leMois?>"></option>
+        </select>
+    </form>
+    <?php
+    }
+    ?>
 </div>
