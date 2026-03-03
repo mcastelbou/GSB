@@ -29,5 +29,8 @@
         "psr-4": {
             "Sources\\": "tests"
         }
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^2.1"
     }
 }

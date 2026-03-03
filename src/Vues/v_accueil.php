@@ -46,6 +46,12 @@
                            class="btn btn-primary btn-lg" role="button">
                             <span class="glyphicon glyphicon-list-alt"></span>
                             <br>Afficher mes fiches de frais</a>
+                        <a href="index.php?uc=exporterListeVisiteurs"
+                           class="btn btn-default btn-sm" role="button" 
+                           download='liste_visiteur.xlsx'>
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <br>Télécharger la liste 
+                            <br>des visiteurs médicaux</a>
                     </div>
                 </div>
             </div>

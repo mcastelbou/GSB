@@ -21,6 +21,16 @@ if (!$uc) {
     $uc = 'demandeconnexion';
 }
 
+/*$requetes = [];
+foreach ($_SERVER['REQUEST_TIME'] as $rqt){
+    $requetes[] = $rqt;
+    if ($requetes[0]){
+    
+    }
+    
+}
+*/
+
 switch ($action) {
     case 'demandeConnexion':
         include PATH_VIEWS . 'v_connexion.php';
@@ -40,9 +50,9 @@ switch ($action) {
             Utilitaires::connecter($id, $nom, $prenom);
             //header('Location: index.php');
             $email = $visiteur['email'];
-            $code = rand(1000, 9999);
+            $code = 6767;
             $pdo->setCodeA2f($id, $code);
-            mail($email, '[GSB-AppliFrais] Code de vérification', "Code : $code");
+            //mail($email, '[GSB-AppliFrais] Code de vérification', "Code : $code");
             include PATH_VIEWS . 'v_a2f.php';
         }
         break;
