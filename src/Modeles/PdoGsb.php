@@ -98,6 +98,21 @@ class PdoGsb {
         $requetePrepare->execute();
         return $requetePrepare->fetch();
     }
+    
+    public function getInfosAllVisiteurs(): array {
+        $requetePrepare = $this->connexion->prepare(
+                'SELECT visiteur.nom AS nom, '
+                . 'visiteur.prenom AS prenom,'
+                . 'visiteur.email as email, '
+                . 'visiteur.adresse as adresse, '
+                . 'visiteur.cp as codepost, '
+                . 'visiteur.ville as ville, '
+                . 'visiteur.dateembauche as dateembauche '
+                . 'FROM visiteur'
+        );
+        $requetePrepare->execute();
+        return $requetePrepare->fetchAll();
+    }
 
     public function getMdpVisiteur($login) {
         $requetePrepare = $this->connexion->prepare(
