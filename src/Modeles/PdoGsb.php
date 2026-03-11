@@ -52,9 +52,14 @@ class PdoGsb {
      * Constructeur privé, crée l'instance de PDO qui sera sollicitée
      * pour toutes les méthodes de la classe
      */
-    private function __construct() {
+    private function __construct(bool $testing) {
+        if ($testing) {
+            $this->connexion = new PDO(DB_DSN_TEST, DB_USER, DB_PWD);
+            $this->connexion->query('SET CHARACTER SET utf8');
+        } else {
         $this->connexion = new PDO(DB_DSN, DB_USER, DB_PWD);
         $this->connexion->query('SET CHARACTER SET utf8');
+        }
     }
 
     /**
@@ -73,7 +78,14 @@ class PdoGsb {
      */
     public static function getPdoGsb(): PdoGsb {
         if (self::$instance == null) {
-            self::$instance = new PdoGsb();
+            self::$instance = new PdoGsb(false);
+        }
+        return self::$instance;
+    }
+    
+    public static function getPdoGsbTest(): PdoGsb {
+        if (self::$instance == null) {
+            self::$instance = new PdoGsb(true);
         }
         return self::$instance;
     }
@@ -86,7 +98,7 @@ class PdoGsb {
      *
      * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
      */
-    public function getInfosVisiteur($login): array {
+    public function getInfosVisiteur($login): array | bool {
         $requetePrepare = $this->connexion->prepare(
                 'SELECT visiteur.id AS id, visiteur.nom AS nom, '
                 . 'visiteur.prenom AS prenom,'
