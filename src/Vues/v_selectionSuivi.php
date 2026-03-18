@@ -32,15 +32,9 @@
                         $prenom = $unVisiteur['prenom'];
                         $mois = $unVisiteur['mois'];
                         if ($id == $visiteurAModifier) {
-                            ?>
-                            <option selected value="<?php echo $id ?>">
-                                <?php echo $nom . ' ' . $prenom . ' | ' . $mois?> </option> 
-                            <?php
+                            echo "<option selected value='$id'>$nom $prenom | $mois</option>";
                         } else {
-                            ?>
-                            <option value="<?php echo $id ?>">
-                                <?php echo $nom . ' ' . $prenom . ' | ' . $mois?> </option>
-                            <?php
+                            echo "<option value='$id'>$nom $prenom | $mois</option>";
                         }
                     }
                     ?>    

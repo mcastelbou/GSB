@@ -13,6 +13,7 @@
  * @license   Réseau CERTA
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
+
 use Outils\Utilitaires;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -23,10 +24,10 @@ switch ($action) {
         break;
     case 'suiviPaiementFiche':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $idVisiteur = substr($visiteurAModifier,0,5);
-        $leMois = substr($visiteurAModifier,5,6);
+        $idVisiteur = substr($visiteurAModifier, 0, 5);
+        $leMois = substr($visiteurAModifier, 5, 6);
         $lesVisiteursASuivre = $pdo->getLesInfosFichesSuivies();
-        if ($visiteurAModifier == "placeholder"){
+        if ($visiteurAModifier == "placeholder") {
             Utilitaires::ajouterErreur("Aucun visiteur séléctionné.");
             include PATH_VIEWS . 'v_erreurs.php';
             break;
@@ -45,10 +46,10 @@ switch ($action) {
         break;
     case 'miseEnPaiement':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $idVisiteur = substr($visiteurAModifier,0,5);
-        $leMois = substr($visiteurAModifier,5,6);
-        
-        $pdo->majEtatFicheFrais($idVisiteur,$leMois,"RB");
-        
+        $idVisiteur = substr($visiteurAModifier, 0, 5);
+        $leMois = substr($visiteurAModifier, 5, 6);
+
+        $pdo->majEtatFicheFrais($idVisiteur, $leMois, "RB");
+
         header("Refresh: 0;URL=index.php?uc=suiviFrais&action=selectionnerFiche");
 }

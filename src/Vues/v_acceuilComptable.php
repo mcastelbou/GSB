@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Vue Accueil Comptable
  *
@@ -12,6 +13,7 @@
  * @license   Réseau CERTA
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
+
 ?>
 <div id="accueil">
     <h2>

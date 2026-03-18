@@ -1,6 +1,6 @@
 <?php
 
-/**
+ /**
  * Gestion de l'accueil
  *
  * PHP Version 8
@@ -16,10 +16,10 @@
 
 if ($estConnecte && $_SESSION['role'] == "visiteur") {
     include_once PATH_VIEWS . 'v_entete.php';
-	include PATH_VIEWS . 'v_accueil.php';
-} else if ($estConnecte && $_SESSION['role'] == "comptable"){
+    include PATH_VIEWS . 'v_accueil.php';
+} elseif ($estConnecte && $_SESSION['role'] == "comptable") {
     include_once PATH_VIEWS . 'v_entete.php';
-        include PATH_VIEWS . 'v_acceuilComptable.php';
+    include PATH_VIEWS . 'v_acceuilComptable.php';
 } else {
     include PATH_VIEWS . 'v_connexion.php';
 }

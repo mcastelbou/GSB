@@ -29,5 +29,13 @@
         "psr-4": {
             "Sources\\": "tests"
         }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "dev-master",
+        "belvg/phpqa-phpcbf": "dev-master",
+        "squizlabs/php_codesniffer": "4.x-dev",
+        "phpmd/phpmd": "dev-master",
+        "johnatas-x/phpcpd": "6.0.3",
+        "phpstan/phpstan": "2.2.x-dev"
     }
 }

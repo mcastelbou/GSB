@@ -13,6 +13,7 @@
  * @license   Réseau CERTA
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
+
 use Outils\Utilitaires;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -23,7 +24,7 @@ switch ($action) {
         break;
     case 'selectionnerMois':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($visiteurAModifier == "placeholder"){
+        if ($visiteurAModifier == "placeholder") {
             Utilitaires::ajouterErreur("Aucun visiteur séléctionné.");
             include PATH_VIEWS . 'v_erreurs.php';
             break;
@@ -31,7 +32,7 @@ switch ($action) {
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
         include PATH_VIEWS . 'v_selectionnerVisiteur.php';
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
-        $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon']-1;
+        $moisASelectionner = getdate(time())['year'] . '' . getdate(time())['mon'] - 1;
         include PATH_VIEWS . 'v_selectionnerMois.php';
         break;
     case 'voirFicheAValider':
@@ -41,41 +42,40 @@ switch ($action) {
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
         include PATH_VIEWS . 'v_selectionnerMois.php';
-        
+
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
-        
+
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
-        
+
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
-        
-        
+
         include PATH_VIEWS . 'v_listeFraisAValider.php';
         break;
-    case 'majFraisForfait' :
+    case 'majFraisForfait':
         $visiteurAModifier = filter_input(INPUT_POST, 'visiteur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesVisiteursAValider = $pdo->getLesVisiteursAValider();
         include PATH_VIEWS . 'v_selectionnerVisiteur.php';
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
         include PATH_VIEWS . 'v_selectionnerMois.php';
-        
+
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
-        
-        $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
+
+        $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
         if (Utilitaires::lesQteFraisValides($lesFrais)) {
-            $pdo->majFraisForfait($visiteurAModifier,$moisASelectionner,$lesFrais);
+            $pdo->majFraisForfait($visiteurAModifier, $moisASelectionner, $lesFrais);
         } else {
             Utilitaires::ajouterErreur('Les valeurs des frais doivent être numériques');
             include PATH_VIEWS . 'v_erreurs.php';
         }
-        
+
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
-                
+
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
         $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($visiteurAModifier, $moisASelectionner);
         include PATH_VIEWS . 'v_listeFraisAValider.php';
@@ -87,29 +87,36 @@ switch ($action) {
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $lesMois = $pdo->getLesMoisAValider($visiteurAModifier);
         include PATH_VIEWS . 'v_selectionnerMois.php';
-        
+
         $numAnnee = substr($moisASelectionner, 0, 4);
         $numMois = substr($moisASelectionner, 4, 2);
         $lesTypesVehicule = $pdo->getLesTypesVehicules();
         $typeASelectionner = $pdo->getTypeVehiculeFicheFrais($visiteurAModifier, $moisASelectionner);
-        
+
         $lesFraisForfait = $pdo->getLesFraisForfait($visiteurAModifier, $moisASelectionner);
-        
-        $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT , FILTER_FORCE_ARRAY);
+
+        $lesFraisHF = filter_input(INPUT_POST, 'lesFraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
         $leBouton = filter_input(INPUT_POST, 'envoyerFormulaire', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $idFraisHF = substr(array_key_first($lesFraisHF),1);
+        $idFraisHF = substr(array_key_first($lesFraisHF), 1);
         $uneDate = $lesFraisHF["D$idFraisHF"];
         $unLibelle = $lesFraisHF["L$idFraisHF"];
         $unMontant = $lesFraisHF["M$idFraisHF"];
-        
-        Utilitaires::valideInfosFrais(Utilitaires::dateAnglaisVersFrancais($uneDate), $unLibelle , $unMontant);
-        if (Utilitaires::nbErreurs() == 0){
-            if ($leBouton == "Corriger"){    
-                $pdo->majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);              
-            } else if ($leBouton == "Supprimer"){
+
+        Utilitaires::valideInfosFrais(Utilitaires::dateAnglaisVersFrancais($uneDate), $unLibelle, $unMontant);
+        if (Utilitaires::nbErreurs() == 0) {
+            if ($leBouton == "Corriger") {
+                $pdo->majFraisHorsForfait($idFraisHF, $uneDate, $unLibelle, $unMontant);
+            } elseif ($leBouton == "Supprimer") {
                 $pdo->refuserFraisHorsForfait($idFraisHF, $unLibelle);
-            } else if ($leBouton == "Reporter"){
-                $pdo->reporterFraisHorsForfait($visiteurAModifier, $moisASelectionner, $idFraisHF, $uneDate, $unLibelle, $unMontant);
+            } elseif ($leBouton == "Reporter") {
+                $pdo->reporterFraisHorsForfait(
+                    $visiteurAModifier,
+                    $moisASelectionner,
+                    $idFraisHF,
+                    $uneDate,
+                    $unLibelle,
+                    $unMontant
+                );
             }
         } else {
             include PATH_VIEWS . 'v_erreurs.php';
@@ -123,9 +130,8 @@ switch ($action) {
         $moisASelectionner = filter_input(INPUT_POST, 'mois', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $nbJustificatifs = filter_input(INPUT_POST, 'nb-justificatifs', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
+
         $pdo->validerFicheFrais($visiteurAModifier, $moisASelectionner, $nbJustificatifs);
-        
+
         header("Refresh: 0;URL=index.php?uc=validerFrais&action=selectionnerVisiteur");
-        
 }

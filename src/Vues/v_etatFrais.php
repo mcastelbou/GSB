@@ -75,8 +75,8 @@
 </div>
 <div>
     <?php
-    if ($_SESSION['idUser'] == $idVisiteur){
-    ?>
+    if ($_SESSION['idUser'] == $idVisiteur) {
+        ?>
     <form method="post" role="form" action="getpdf.php" target="_blank">
         <input class="btn btn-secondary mt-3" value="Afficher au format PDF" type="submit"/>
         <select hidden id="visiteur" name="visiteur">
@@ -86,7 +86,7 @@
                     <option selected value="<?php echo $leMois?>"></option>
         </select>
     </form>
-    <?php
+        <?php
     }
     ?>
 </div>

@@ -16,10 +16,10 @@
  */
 
 ?>
-<?php 
-if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
+<?php
+if ($action == "majFraisForfait" || $action == "majFraisHorsForfait") {
     echo "<script type='text/javascript'>confirm('Modification prise en compte.')</script>";
-} 
+}
 ?>
 <hr class="my-5">
 <div class="row">    
@@ -43,28 +43,24 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                            value="<?php echo $quantite ?>" 
                            class="form-control">
                     <?php
-                    if ($idFrais == "KM"){?>
+                    if ($idFrais == "KM") {?>
                     <select id="CV" name="lesFrais[CV]" class="form-control">
                         <option hidden value="placeholder">Choisir un type de véhicule</option>
-                    <?php 
-                    foreach ($lesTypesVehicule as $typeVehicule) {
-                        $libelleType = $typeVehicule['libelle'];
-                        $codeType = $typeVehicule['code'];
-                        if ($codeType == $typeASelectionner) { ?>
-                            <option selected value="<?php echo $codeType?>">
-                                <?php echo $libelleType?></option>
-                            <?php
-                        } else { ?>
-                            <option value="<?php echo $codeType?>">
-                                <?php echo $libelleType?></option>
                         <?php
-                        }
-                    }?>
+                        foreach ($lesTypesVehicule as $typeVehicule) {
+                            $libelleType = $typeVehicule['libelle'];
+                            $codeType = $typeVehicule['code'];
+                            if ($codeType == $typeASelectionner) {
+                                echo "<option selected value='$codeType'>$libelleType</option>";
+                            } else {
+                                echo "<option value='$codeType'>$libelleType</option>";
+                            }
+                        }?>
                     </select>
-                    <?php
+                        <?php
                     }?>
                 </div>
-                <?php
+                    <?php
                 }?>
                 <div class="d-flex gap-2">
                     <button class="btn btn-success" type="submit">Corriger</button>
@@ -104,64 +100,64 @@ if($action == "majFraisForfait" || $action == "majFraisHorsForfait"){
                 . "<td></td>"
                 . "<td></td>"
                 . "<td></td>"
-            . "</tr>";
+                . "</tr>";
             } else {
-            foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-                $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-                $date = $unFraisHorsForfait['date'];
-                $montant = $unFraisHorsForfait['montant'];
-                $id = $unFraisHorsForfait['id']; ?>           
-                <tr>
-                    <form method="post" role="form" 
-                        action="index.php?uc=validerFrais&action=majFraisHorsForfait">
-                        <td> 
-                            <input type="date" id="Date<?php echo $id?>" 
-                                   name="lesFraisHorsForfait[D<?php echo $id?>]" 
-                                   size="10" maxlength="10"
-                                   value="<?php echo Outils\Utilitaires::dateFrancaisVersAnglais($date) ?>"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <input type="text" id="Libelle<?php echo $id?>" 
-                                   name="lesFraisHorsForfait[L<?php echo $id?>]" 
-                                   size="10" maxlength="100"
-                                   value="<?php echo $libelle?>"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <input type="text" id="Montant<?php echo $id?>" 
-                                   name="lesFraisHorsForfait[M<?php echo $id?>]" 
-                                   size="6" maxlength="8"
-                                   value="<?php echo $montant ?>"
-                                   class="form-control">
-                        </td>
-                        <td class="d-flex gap-1 flex-wrap">
-                            <input class="btn btn-success"
-                                    type="submit"
-                                    value="Corriger"
-                                    name="envoyerFormulaire"/>
-                            <input class="btn btn-danger"
-                                    type="reset"
-                                    value="Réinitialiser"
-                                    name="RéinitialiserFraisHF"/>
-                            <input class="btn btn-danger"
-                                    type="submit"
-                                    value="Supprimer"
-                                    name="envoyerFormulaire"/> 
-                            <input class="btn btn-secondary"
-                                    type="submit"
-                                    value="Reporter"
-                                    name="envoyerFormulaire"/> 
-                        </td>
-                        <select hidden id="visiteur" name="visiteur">
-                            <option selected value="<?php echo $visiteurAModifier?>"></option>
-                        </select>
-                        <select hidden id="mois" name="mois">
-                                <option selected value="<?php echo $moisASelectionner?>"></option>
-                        </select>
-                    </form>    
-                </tr>
-                <?php
+                foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                    $date = $unFraisHorsForfait['date'];
+                    $montant = $unFraisHorsForfait['montant'];
+                    $id = $unFraisHorsForfait['id']; ?>           
+                    <tr>
+                        <form method="post" role="form" 
+                            action="index.php?uc=validerFrais&action=majFraisHorsForfait">
+                            <td> 
+                                <input type="date" id="Date<?php echo $id?>" 
+                                       name="lesFraisHorsForfait[D<?php echo $id?>]" 
+                                       size="10" maxlength="10"
+                                       value="<?php echo Outils\Utilitaires::dateFrancaisVersAnglais($date) ?>"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <input type="text" id="Libelle<?php echo $id?>" 
+                                       name="lesFraisHorsForfait[L<?php echo $id?>]" 
+                                       size="10" maxlength="100"
+                                       value="<?php echo $libelle?>"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <input type="text" id="Montant<?php echo $id?>" 
+                                       name="lesFraisHorsForfait[M<?php echo $id?>]" 
+                                       size="6" maxlength="8"
+                                       value="<?php echo $montant ?>"
+                                       class="form-control">
+                            </td>
+                            <td class="d-flex gap-1 flex-wrap">
+                                <input class="btn btn-success"
+                                        type="submit"
+                                        value="Corriger"
+                                        name="envoyerFormulaire"/>
+                                <input class="btn btn-danger"
+                                        type="reset"
+                                        value="Réinitialiser"
+                                        name="RéinitialiserFraisHF"/>
+                                <input class="btn btn-danger"
+                                        type="submit"
+                                        value="Supprimer"
+                                        name="envoyerFormulaire"/> 
+                                <input class="btn btn-secondary"
+                                        type="submit"
+                                        value="Reporter"
+                                        name="envoyerFormulaire"/> 
+                            </td>
+                            <select hidden id="visiteur" name="visiteur">
+                                <option selected value="<?php echo $visiteurAModifier?>"></option>
+                            </select>
+                            <select hidden id="mois" name="mois">
+                                    <option selected value="<?php echo $moisASelectionner?>"></option>
+                            </select>
+                        </form>    
+                    </tr>
+                    <?php
                 }
             }
             ?>
