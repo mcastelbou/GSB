@@ -37,7 +37,7 @@
                             echo "<option value='$id'>$nom $prenom | $mois</option>";
                         }
                     }
-                    ?>    
+                    ?>
                 </select>
             </div>
             <div class="d-flex gap-2 mt-3 ms-3">
